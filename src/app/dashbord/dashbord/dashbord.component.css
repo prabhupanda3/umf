@@ -1,0 +1,111 @@
+#hirarchySelector{
+    background-color: #ffffff;
+   
+}
+#element{
+    background-color: #ffffff;
+   float: right;
+   margin-top: -4%;
+   padding: 2;
+}
+#datedata{
+    height: 80%;
+}
+#Communication-tag{
+    padding: auto;
+    height: 10%;
+    width: 20%;
+}
+#penalheading{
+    border-radius: 4px 4px;
+}
+#heading{
+    border-radius: 4px 4px;
+    background-color: #ffffff;
+}
+#titelbar{
+    background-color: #c9c9c9;
+}
+#topbar{
+    height: 5%;
+    background-color: #ffffff;
+      }
+#cscolumn{
+    height: 30%;
+    width: 40%;
+}
+#commstatus{
+  border: solid #ce12129d;
+  
+}
+#Agcomm{
+  height: 45%;
+  width: 35%;
+  position: relative;
+border-radius: 2px;
+}
+#cs-container {
+    width: 100%; /* Or set a max-width */
+    height: 0;
+    background-color: #cccbcb;
+    padding-bottom: 50%; /* Aspect ratio, e.g., 50% for a 2:1 ratio */
+    position: relative;
+  }
+  #cs-container > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+ 
+ 
+  #nogagcol{
+    height: 45%;
+    width: 35%;
+    position: relative;
+   left:30%;
+  border-radius: 2px;
+  margin-top: -17.5%;
+  }
+  #nonagcomm{
+    width: 100%; /* Or set a max-width */
+    height: 0;
+    background-color: #ffffff;
+    padding-bottom: 50%; /* Aspect ratio, e.g., 50% for a 2:1 ratio */
+    position: relative;
+  }
+  #nonagcomm > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #total-col{
+    height: 45%;
+    width: 35%;
+  border-radius: 2px;
+  position: relative;
+   left:65%;
+  border-radius: 2px;
+  margin-top: -17.5%;
+  
+  }
+  #total-comm{
+    width: 100%; /* Or set a max-width */
+    height: 0;
+    background-color: #ffffff;
+    padding-bottom: 50%; /* Aspect ratio, e.g., 50% for a 2:1 ratio */
+    position: relative;
+  }
+  #total-comm > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #liveCommcontainer{
+    background-color: rgb(255, 255, 255);
+  }

@@ -1,0 +1,17 @@
+<div id="outerdiv"class="w-100 p-3">
+  <div id="innerDiv">
+    <form (ngSubmit)="onSubmit()" id="loginForm">
+      <div id="formInside">
+        <div id="username">
+          <label for="username" style="color:blue;">Username:</label><br>
+          <input type="text" id="username" name="username" [(ngModel)]="username">
+        </div>
+        <div id="password">
+          <label for="password" style="color:blue;">Password:</label><br>
+          <input type="text" id="password" name="password" [(ngModel)]="password">
+        </div>
+        <button type="submit" id="button">submit</button>
+      </div>
+    </form>
+  </div>
+</div>
