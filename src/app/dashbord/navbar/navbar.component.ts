@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   data!: any;
-  moduleList!: Module[];
+  moduleList!:any;
+  moduleasString!:any;
   submoduleList!: SubModule[];
   constructor(private dataShairingService: DataShairingService,
     private router:Router,
@@ -25,7 +26,14 @@ export class NavbarComponent {
   }
   
   public dashbord(): void {
-    this.moduleList = this.dataShairingService.getModule();
+    
+    this.moduleasString=sessionStorage.getItem("AssignedModules");
+console.log("Module String :"+this.moduleasString);
+
+try{
+  this.moduleList =JSON.parse(this.moduleasString);
+  if (Array.isArray(this.moduleList)) {
+
     this.moduleList.forEach((module) => {
       const newDiv = this.renderer.createElement('div')
       const moduleNameSpan = this.renderer.createElement('span');
@@ -77,6 +85,13 @@ export class NavbarComponent {
       this.renderer.setStyle(newDiv, 'margin-left', '3%');
       this.renderer.appendChild(this.el.nativeElement, newDiv);
     });
+  
+  }
+  
+  }catch(error){
+      console.error("No Module Access")
+    }
+    
   }
   
   handelclick(): void {

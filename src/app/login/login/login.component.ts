@@ -34,8 +34,10 @@ export class LoginComponent {
           sessionStorage.setItem('username',response.user.username);
           sessionStorage.setItem('hid',"0");
           sessionStorage.setItem('levelId',"1");
+          sessionStorage.setItem("AssignedModules",JSON.stringify(response.module));
           this.rout.navigate(['/navbar']);
-          this.dataShairingService.setModule(response.module);
+
+          //this.dataShairingService.setModule();
           console.log('TOKEN RECIVED  :' + this.token);
         }
 
