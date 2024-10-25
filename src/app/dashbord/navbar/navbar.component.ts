@@ -94,7 +94,7 @@ try{
     
   }
   
-  handelclick(): void {
+  dashboard(): void {
     try{
       window.location.href = '/dashboard';
       
@@ -103,13 +103,26 @@ try{
     console.error('Error log',error);
       }
 }
-usermanagement():void{
+userRole():void{
   try{
-    window.location.href = '/usermanagement';
+    window.location.href = '/userRoleMaster';
     
 }
 catch(error){
   console.error('Error log',error);
     }
 }
+
+userMaster():void{
+  try{
+    window.location.href = '/userMaster';
+    
+}
+catch(error){
+  console.error('Error log',error);
+    }
+}
+
+
+
 }

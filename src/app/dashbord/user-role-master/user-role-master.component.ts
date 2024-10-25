@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { error } from 'highcharts';
 
 @Component({
   selector: 'app-user-role-master',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class UserRoleMasterComponent {
 
+  public userRoleMaster():void{
+    try{
+sessionStorage.getItem("AssignedModules");
+    }catch(error){
+      
+    }
+  }
 }
