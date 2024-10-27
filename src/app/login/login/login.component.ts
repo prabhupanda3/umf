@@ -19,6 +19,7 @@ export class LoginComponent {
   password!: string;
   token!: string;
   module!: any;
+  role!:any;
   onSubmit() {
 
     // Form is valid, proceed with login logic
@@ -34,7 +35,9 @@ export class LoginComponent {
           sessionStorage.setItem('username',response.user.username);
           sessionStorage.setItem('hid',"0");
           sessionStorage.setItem('levelId',"1");
-          sessionStorage.setItem("AssignedModules",JSON.stringify(response.module));
+          sessionStorage.setItem("AssignedModules",JSON.stringify(response.role.module));
+          sessionStorage.setItem("ROLE",JSON.stringify(response.role));
+
           this.rout.navigate(['/navbar']);
 
           //this.dataShairingService.setModule();
