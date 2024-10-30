@@ -1,5 +1,5 @@
 <div class="container-fluid" style="background-color: #b7ccea;">
     <div style="float: right;">
-    <button [disabled]="!isactivateButton()" (click)="getModuleSubmodule()" class="btn-primary">ADD</button>
+    <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }" [disabled]="!isactivateButton()" (click)="getModuleSubmodule()" style="color: white;">ADD</button>
     </div>
 </div>

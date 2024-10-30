@@ -7,53 +7,51 @@ import { error } from 'highcharts';
   styleUrls: ['./user-role-master.component.css']
 })
 export class UserRoleMasterComponent {
-roleaccess:any;
-roleId:any;
-moduleDetails:any;
-sabmoduleAction:any;
-sabmodule:any;
-submoduleId!:String;
-actionID:any;
-submoduleName!:String;
-add!:String;
-active:boolean=false;
-ngOnInit(){
-  this.isactivateButton();
-}
-
-  public isactivateButton():boolean {
-    this.roleaccess=sessionStorage.getItem("ROLE");
-    try{
- this.moduleDetails=JSON.parse(this.roleaccess);
-this.moduleDetails.sabmoduleAction.forEach((sactions:any)=>{
-  if(sactions.sabmodule.submoduleName=="UserRoleManagement"){
-    console.log("SabmoduleName :"+sactions.sabmodule.submoduleName)
-    if(sactions.sabmodule.add == 1){
-      console.log("Active :"+sactions.sabmodule.add)
-      this.active=true;
-      return this.active;
-    }else{
-
-      return this.active;
-    }
-    
+  roleaccess: any;
+  roleId: any;
+  moduleDetails: any;
+  sabmoduleAction: any;
+  sabmodule: any;
+  submoduleId!: String;
+  actionID: any;
+  submoduleName!: String;
+  add!: String;
+  active!: boolean;
+  ngOnInit() {
+    this.isactivateButton();
   }
-  else{
-    console.log("Else block")
-    return this.active;
-  }
-});
-return this.active;
 
-    }catch(error){
-      console.log("Catch block")
+  
+
+  public isactivateButton(): boolean {
+    this.roleaccess = sessionStorage.getItem("ROLE");
+
+    try {
+      this.moduleDetails = JSON.parse(this.roleaccess);
+      this.active = false; // Initialize active to false
+      for (const smactions of this.moduleDetails.sabmoduleAction) {
+
+        if (smactions.sabmodule.submoduleName === "UserRoleManagement" ) {
+          if(smactions.add == "1"){
+            console.log("Add"+smactions.sabmodule.add )
+            this.active = true;
+            break; 
+
+          }
+          
+        
+        }
+      }
       return this.active;
+    } catch (error) {
+      console.log("Error parsing role access:", error);
+      return false; // Default return false on error
     }
   }
 
-getModuleSubmodule(){
+  getModuleSubmodule() {
 
-}
+  }
 
 
 
