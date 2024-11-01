@@ -8,7 +8,8 @@ export class DataShairingService {
   username: any;
 
   constructor(private module:Module) { }
- 
+ baseUrl:String="http://localhost:8087/";
+ //baseUrl:String="http://13.50.76.182";
 
 setModule(module:any):any{
   this.module=module;

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { error } from 'highcharts';
+import { UsermanagementService } from 'src/app/service/UserManagement/usermanagement.service';
 
 @Component({
   selector: 'app-user-role-master',
@@ -17,10 +18,13 @@ export class UserRoleMasterComponent {
   submoduleName!: String;
   add!: String;
   active!: boolean;
+  module=[];
   ngOnInit() {
     this.isactivateButton();
   }
+constructor(private usermangement:UsermanagementService){
 
+}
   
 
   public isactivateButton(): boolean {
@@ -50,7 +54,14 @@ export class UserRoleMasterComponent {
   }
 
   getModuleSubmodule() {
+this.usermangement.getUserModuleSabmodule().subscribe(
+  response=>{
+    console.log("Hi this is response"+response);
+  },
+  error=>{
 
+  }
+);
   }
 
 
