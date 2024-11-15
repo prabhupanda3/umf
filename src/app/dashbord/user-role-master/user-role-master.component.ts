@@ -15,10 +15,17 @@ export class UserRoleMasterComponent {
   sabmodule: any;
   submoduleId!: String;
   actionID: any;
-  submoduleName!: String;
   add!: String;
+  edit!:String;
+  delete!:String;
+  view!:String;
   active!: boolean;
   module=[];
+  moduleName!:String;
+  sabModuleAction:any;
+  moduleID!:number;
+  
+
   ngOnInit() {
     this.isactivateButton();
   }
@@ -56,7 +63,12 @@ constructor(private usermangement:UsermanagementService){
   getModuleSubmodule() {
 this.usermangement.getUserModuleSabmodule().subscribe(
   response=>{
-    console.log("Hi this is response"+response);
+    response.forEach((res: { moduleName: string;   subModuleName: String;sabModuleAction:any;
+    }) => {
+      console.log("Hi this is response :"+res.sabModuleAction.actionID);
+
+    });
+
   },
   error=>{
 
