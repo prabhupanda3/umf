@@ -7,53 +7,52 @@ import { error } from 'highcharts';
   styleUrls: ['./user-role-master.component.css']
 })
 export class UserRoleMasterComponent {
-roleaccess:any;
-roleId:any;
-moduleDetails:any;
-sabmoduleAction:any;
-sabmodule:any;
-submoduleId!:String;
-actionID:any;
-submoduleName!:String;
-add!:String;
-active:boolean=false;
-ngOnInit(){
-  this.isactivateButton();
-}
-
-  public isactivateButton():boolean {
-    this.roleaccess=sessionStorage.getItem("ROLE");
-    try{
- this.moduleDetails=JSON.parse(this.roleaccess);
-this.moduleDetails.sabmoduleAction.forEach((sactions:any)=>{
-  if(sactions.sabmodule.submoduleName=="UserRoleManagement"){
-    console.log("SabmoduleName :"+sactions.sabmodule.submoduleName)
-    if(sactions.sabmodule.add == 1){
-      console.log("Active :"+sactions.sabmodule.add)
-      this.active=true;
-      return this.active;
-    }else{
-
-      return this.active;
-    }
-    
+  roleaccess: any;
+  roleId: any;
+  moduleDetails: any;
+  sabmoduleAction: any;
+  sabmodule: any;
+  submoduleId!: String;
+  actionID: any;
+  submoduleName!: String;
+  add!: String;
+  active: boolean = false;
+  ngOnInit() {
+    this.isactivateButton();
   }
-  else{
-    console.log("Else block")
-    return this.active;
-  }
-});
-return this.active;
 
-    }catch(error){
+  public isactivateButton(): boolean {
+    this.roleaccess = sessionStorage.getItem("ROLE");
+    try {
+      this.moduleDetails = JSON.parse(this.roleaccess);
+      for (const smactions of this.moduleDetails.sabmoduleAction) {
+        if (smactions.sabmodule.submoduleName == "UserRoleManagement") {
+          console.log("SabmoduleName :" + smactions.sabmodule.submoduleName)
+          if (smactions.sabmodule.add == 1) {
+            console.log("Active :" + smactions.sabmodule.add)
+            this.active = true;
+
+          } else {
+            this.active;
+          }
+
+        }
+        else {
+          console.log("Else block")
+          return this.active;
+        }
+      };
+      return this.active;
+
+    } catch (error) {
       console.log("Catch block")
       return this.active;
     }
   }
 
-getModuleSubmodule(){
+  getModuleSubmodule() {
 
-}
+  }
 
 
 
