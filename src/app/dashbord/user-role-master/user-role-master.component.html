@@ -1,5 +1,29 @@
 <div class="container-fluid" style="background-color: #b7ccea;">
-    <div style="float: right;">
-    <button [disabled]="!isactivateButton()" (click)="getModuleSubmodule()" class="btn-primary">ADD</button>
-    </div>
+  <div style="float: right;">
+    <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }" [disabled]="!isactivateButton()"
+      (click)="getModuleSubmodule()" style="color: white;">ADD</button>
+  </div>
+  <div style="margin-top: 2%;" class="table-responsive">
+
+    <table id="allChildRole" class="display">
+      <thead>
+        <tr>
+          <th>AuthorityNmae</th>
+          <th>RoleNmae</th>
+          <th>ParentRole</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let role of roles">
+          <th>{{role.authorityName}}</th>
+          <th>{{role.roleName}}</th>
+          <th>{{role.parentRole}}</th>
+          <th>{{role.roleDesc}}</th>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
 </div>
