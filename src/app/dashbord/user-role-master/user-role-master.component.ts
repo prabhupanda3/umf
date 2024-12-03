@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { UsermanagementService } from 'src/app/service/UserManagement/usermanagement.service';
 import * as $ from 'jquery'; // Import jQuery
 import 'datatables.net'; // Import DataTables
+import 'datatables.net-buttons';
+
 @Component({
   selector: 'app-user-role-master',
   templateUrl: './user-role-master.component.html',
@@ -29,13 +31,16 @@ export class UserRoleMasterComponent {
   roleName!:String;
   parentRole!:String;
   roleDesc!:String;
-
+  
   ngOnInit() {
     this.isactivateButton();
-    ($('#allChildRole') as any).DataTable();
     this.getAllChildRoleDetails();
   }
-  
+ 
+  ngAfterViewInit(): void {
+    // Initialize DataTables after the view is initialized
+    
+  }
 constructor(private usermangement:UsermanagementService){
 }
 public isactivateButton(): boolean {
@@ -64,6 +69,14 @@ public isactivateButton(): boolean {
 getAllChildRoleDetails(){
   this.usermangement.getAllChildRoleDetails().subscribe(response=>{
     this.roles=response;
+    setTimeout(() => {
+      if ($.fn.dataTable.isDataTable('#allChildRole')) {
+        $('#allChildRole').DataTable().clear().rows.add(this.roles).draw(); // Refresh the DataTable
+      } else {
+        $('#allChildRole').DataTable(); // Initialize DataTable
+        
+      }
+    });
   },
 error=>{
 

@@ -36,8 +36,7 @@ import { UserRoleMasterComponent } from './user-role-master/user-role-master.com
         MatFormFieldModule,
         MatInputModule,MatButtonModule,
         HighchartsChartModule,
-        CanvasJSAngularChartsModule 
-       
+        CanvasJSAngularChartsModule ,
     ]
 })
 export class DashbordModule { 

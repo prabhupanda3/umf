@@ -1,29 +1,46 @@
-<div class="container-fluid" style="background-color: #b7ccea;">
-  <div style="float: right;">
-    <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }" [disabled]="!isactivateButton()"
-      (click)="getModuleSubmodule()" style="color: white;">ADD</button>
+<div class="wrapper">
+  <div class="content-wrapper">
+    <div class="panel panel-bd">
+      <div class="panel-heading" style="width: 100%;background-color: rgb(223, 221, 221);height: 2%;">
+        <div class="panel-titel" style="width: 100%;">
+          <h4 style="color: #8685c5;">UserRoleMaster</h4>
+          <div class="btn-group pull-right clearfix" style="margin-left: 95%;margin-top: -3%;">
+            <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }" [disabled]="!isactivateButton()"
+              (click)="getModuleSubmodule()" style="color: white;">ADD</button>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 2%;" class="panel-body table-responsive">
+        <table id="allChildRole" class="display" style="width: 100%;">
+          <thead style="height: 5%;background-color: #128c7e;color: #ffffff;font:small-caption">
+            <tr>
+              <th>AuthorityNmae</th>
+              <th>RoleNmae</th>
+              <th>ParentRole</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let role of roles">
+              <td class="centered-cell ">{{role.authorityName}}</td>
+              <td class="centered-cell ">{{role.roleName}}</td>
+              <td class="centered-cell ">{{role.parentRole}}</td>
+              <td class="centered-cell ">{{role.roleDesc}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  <div style="margin-top: 2%;" class="table-responsive">
-
-    <table id="allChildRole" class="display">
-      <thead>
-        <tr>
-          <th>AuthorityNmae</th>
-          <th>RoleNmae</th>
-          <th>ParentRole</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let role of roles">
-          <th>{{role.authorityName}}</th>
-          <th>{{role.roleName}}</th>
-          <th>{{role.parentRole}}</th>
-          <th>{{role.roleDesc}}</th>
-        </tr>
-
-
-      </tbody>
-    </table>
-  </div>
-</div>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    
+  </style>

@@ -13,11 +13,13 @@ import { SubModule } from './dashbord/navbar/sub-module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './chat/chat.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { ExportComponent } from './Export/export/export.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        ChatComponent,  
+        ChatComponent,
+        ExportComponent,  
     ],
     bootstrap: [AppComponent],
     imports: [
