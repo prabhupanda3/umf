@@ -11,12 +11,17 @@
         </div>
       </div>
       <div style="margin-top: 2%;" class="panel-body table-responsive">
+        <div>
+          <button (click)="documentExport('csv')">CSV</button>
+          <button (click)="documentExport('excel')">Excel</button>
+          <button (click)="documentExport('pdf')">PDF</button>
+        </div>
         <table id="allChildRole" class="display" style="width: 100%;">
           <thead style="height: 5%;background-color: #128c7e;color: #ffffff;font:small-caption">
             <tr>
-              <th>AuthorityNmae</th>
-              <th>RoleNmae</th>
-              <th>ParentRole</th>
+              <th>Authority Nmae</th>
+              <th>Role Name</th>
+              <th>Parent Role</th>
               <th>Description</th>
             </tr>
           </thead>
