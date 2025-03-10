@@ -7,6 +7,7 @@ import { ChatComponent } from './chat/chat.component';
 import { UserManagementComponent } from './dashbord/user-management/user-management.component';
 import { UserMasterComponent } from './dashbord/user-master/user-master.component';
 import { UserRoleMasterComponent } from './dashbord/user-role-master/user-role-master.component';
+import { RoleCreationComponent } from './dashbord/role-creation/role-creation.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path:'chat',component:ChatComponent},
  {path:'usermanagement',component:UserManagementComponent},
  {path:'userMaster',component:UserMasterComponent},
- {path:'userRoleMaster',component:UserRoleMasterComponent}
+ {path:'userRoleMaster',component:UserRoleMasterComponent},
+ {path:'roleCreation',component:RoleCreationComponent}
 ];
 
 @NgModule({

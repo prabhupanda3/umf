@@ -4,6 +4,7 @@ import * as $ from 'jquery'; // Import jQuery
 import 'datatables.net'; // Import DataTables
 import 'datatables.net-buttons';
 import { ExportService } from 'src/app/service/export.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-role-master',
@@ -43,7 +44,7 @@ export class UserRoleMasterComponent {
     // Initialize DataTables after the view is initialized
 
   }
-  constructor(private usermangement: UsermanagementService, private exportServices: ExportService) {
+  constructor(private usermangement: UsermanagementService, private exportServices: ExportService,private router: Router) {
   }
   public isactivateButton(): boolean {
     this.roleaccess = sessionStorage.getItem("ROLE");
@@ -91,10 +92,10 @@ export class UserRoleMasterComponent {
         response.forEach((res: {
           moduleName: string; subModuleName: String; sabModuleAction: any;
         }) => {
+          
+          this.router.navigate(['/roleCreation']);
           console.log("Hi this is response :" + res.sabModuleAction.actionID);
-
         });
-
       },
       error => {
 

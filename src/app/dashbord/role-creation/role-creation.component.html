@@ -1,0 +1,65 @@
+<div class="wrapper">
+    <div class="content-wrapper">
+        <div class="panel">
+            <div class="panel-bd">
+                <div class="panel-heading" style="width: 100%;background-color: #075E54;height: 2%;">
+                    <div class="panel-titel" style="width: 100%;">
+                        <h4 style="color: #fafaff;font-size: large;padding-left: 35%;padding-top: 2%;" class="">USER
+                            ROLE MASTER</h4>
+                    </div>
+                </div>
+                <div class="panel-bd">
+                    <h4>User Role</h4><input type="text" [(ngModel)]="userrole" placeholder="Role">
+                    <h4>User Role Description</h4><input type="text" [(ngModel)]="userroleDescription"
+                        placeholder="Description">
+                    <label for="dropdown">Parent Role:</label>
+                    <select id="dropdown" [(ngModel)]="parentrole">
+                        <option *ngFor="let option of parentHirarchy" [value]="option">{{ option }}</option>
+                    </select>
+                    <label for="dropdown">Hirrarchy Level:</label>
+                    <select id="dropdown" [(ngModel)]="hierarchy">
+                        <option *ngFor="let option of hierarchyList" [value]="option">{{ option }}</option>
+                    </select>
+                    <div>Access Control
+                        <div id="Accesscontrol">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Module Name</th>
+                                        <th>Sub Module Name</th>
+                                        <th>Add</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let permission of userPermissions">
+                                        <td>{{ permission.moduleName }}</td>
+                                        <td>{{ permission.subModuleName }}</td>
+                                        <td>
+                                            <input type="checkbox" [checked]="false" [disabled]="permission.add !== '1'" />
+
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" [checked]="false" [disabled]="permission.edit !== '1'" />
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" [checked]="false" [disabled]="permission.delete !== '1'" />
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" [checked]="false" [disabled]="permission.view !== '1'" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

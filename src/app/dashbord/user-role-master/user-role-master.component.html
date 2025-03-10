@@ -1,25 +1,25 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <div class="panel panel-bd">
-      <div class="panel-heading" style="width: 100%;background-color: rgb(223, 221, 221);height: 2%;">
+      <div class="panel-heading" style="width: 100%;background-color: #075E54;height: 2%;">
         <div class="panel-titel" style="width: 100%;">
-          <h4 style="color: #8685c5;">UserRoleMaster</h4>
+          <h4 style="color: #fafaff;font-size: large;padding-left: 35%;padding-top: 2%;">USER ROLE MASTER</h4>
           <div class="btn-group pull-right clearfix" style="margin-left: 95%;margin-top: -3%;">
             <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }" [disabled]="!isactivateButton()"
-              (click)="getModuleSubmodule()" style="color: white;">ADD</button>
+              (click)="getModuleSubmodule()" style="color: white;" class="btn">ADD</button>
           </div>
         </div>
       </div>
       <div style="margin-top: 2%;" class="panel-body table-responsive">
         <div>
-          <button (click)="documentExport('csv')">CSV</button>
-          <button (click)="documentExport('excel')">Excel</button>
-          <button (click)="documentExport('pdf')">PDF</button>
+          <button (click)="documentExport('csv')" class="btn btn-secondary">CSV</button>
+          <button (click)="documentExport('excel')" class="btn btn-secondary">Excel</button>
+          <button (click)="documentExport('pdf')" class="btn btn-secondary">PDF</button>
         </div>
         <table id="allChildRole" class="display" style="width: 100%;">
           <thead style="height: 5%;background-color: #128c7e;color: #ffffff;font:small-caption">
             <tr>
-              <th>Authority Nmae</th>
+              <th>Authority Name</th>
               <th>Role Name</th>
               <th>Parent Role</th>
               <th>Description</th>
@@ -42,10 +42,11 @@
       width: 100%;
       border-collapse: collapse;
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid black;
       padding: 8px;
       text-align: left;
     }
-    
   </style>

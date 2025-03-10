@@ -13,6 +13,8 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserMasterComponent } from './user-master/user-master.component';
 import { UserRoleMasterComponent } from './user-role-master/user-role-master.component';
+import { RoleCreationComponent } from './role-creation/role-creation.component';
+
 
 
 
@@ -23,6 +25,8 @@ import { UserRoleMasterComponent } from './user-role-master/user-role-master.com
         UserManagementComponent,
         UserMasterComponent,
         UserRoleMasterComponent,
+        RoleCreationComponent,
+        
     ],
     exports: [
         NavbarComponent,
