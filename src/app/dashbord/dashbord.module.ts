@@ -4,7 +4,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { DashbordComponent } from './dashbord/dashbord.component';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,7 +40,7 @@ import { RoleCreationComponent } from './role-creation/role-creation.component';
         MatFormFieldModule,
         MatInputModule,MatButtonModule,
         HighchartsChartModule,
-        CanvasJSAngularChartsModule ,
+        CanvasJSAngularChartsModule ,MatFormFieldModule,MatOptionModule
     ]
 })
 export class DashbordModule { 

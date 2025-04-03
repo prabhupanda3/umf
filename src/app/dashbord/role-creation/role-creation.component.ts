@@ -1,4 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
+import { Action } from 'src/app/beans/action';
 import { UsermanagementService } from 'src/app/service/UserManagement/usermanagement.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class RoleCreationComponent {
   hierarchy!:string;
   hierarchyList!:string;
   userPermissions: any[] = [];
+  actions:Action[]=[];
   ngOnInit(){
     this.accessControl();
   }
@@ -22,30 +24,19 @@ export class RoleCreationComponent {
   accessControl(){
     this.usermangement.getUserModuleSabmodule().subscribe(
       response => {
-        this.userPermissions = response.map((res: { 
-          moduleName: string; 
-          subModuleName: string; 
-          sabModuleAction:any;
-          actionID: number; 
-          add: string; 
-          edit: string; 
-          delete: string; 
-          view: string 
-        }) => ({
-          moduleName: res.moduleName,
-          subModuleName: res.subModuleName,
-          actionID: res.actionID,
-          add: res.sabModuleAction.add,   // Convert to boolean if needed
-          edit: res.sabModuleAction.edit,
-          delete: res.sabModuleAction.delete,
-          view: res.sabModuleAction.view 
-        }));
-        this.userPermissions.forEach(ress=>{
-          console.log(ress.moduleName+"Permission "+ress.sabModuleAction.add);
-        });
+      this.actions= response;
       },
       error=>{
     
     });
+      }
+      allRoles(){
+        this.usermangement.getAllRoleName().subscribe(
+          response=>{
+            this.parentHirarchy=response;
+          },
+          error=>{
+            
+          });
       }
 }

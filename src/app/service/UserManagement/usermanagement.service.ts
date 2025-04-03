@@ -15,6 +15,8 @@ export class UsermanagementService {
 
   getAllChildRoleDetails():Observable<any>{
     return this.http.get(`${this.dataShairingService.baseUrl}userRole/childRoleforUser`);
-
+  }
+  getAllRoleName():Observable<any>{
+return this.http.get<any>(`${this.dataShairingService.baseUrl}userRole/listOfChildRole`);
   }
 }

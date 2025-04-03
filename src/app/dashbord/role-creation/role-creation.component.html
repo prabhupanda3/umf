@@ -3,26 +3,34 @@
         <div class="panel">
             <div class="panel-bd">
                 <div class="panel-heading" style="width: 100%;background-color: #075E54;height: 2%;">
-                    <div class="panel-titel" style="width: 100%;">
+                    <div class="panel-titel" style="width: 100%;" class="col-6">
                         <h4 style="color: #fafaff;font-size: large;padding-left: 35%;padding-top: 2%;" class="">USER
                             ROLE MASTER</h4>
                     </div>
                 </div>
                 <div class="panel-bd">
-                    <h4>User Role</h4><input type="text" [(ngModel)]="userrole" placeholder="Role">
-                    <h4>User Role Description</h4><input type="text" [(ngModel)]="userroleDescription"
-                        placeholder="Description">
-                    <label for="dropdown">Parent Role:</label>
-                    <select id="dropdown" [(ngModel)]="parentrole">
-                        <option *ngFor="let option of parentHirarchy" [value]="option">{{ option }}</option>
-                    </select>
-                    <label for="dropdown">Hirrarchy Level:</label>
-                    <select id="dropdown" [(ngModel)]="hierarchy">
-                        <option *ngFor="let option of hierarchyList" [value]="option">{{ option }}</option>
-                    </select>
-                    <div>Access Control
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>User Role</h4><input type="text" [(ngModel)]="userrole" placeholder="Role"
+                                class="form-control">
+                            <h4>User Role Description</h4><input type="text" [(ngModel)]="userroleDescription"
+                                placeholder="Description" class="form-control"><br>
+                            <label for="dropdown">Parent Role:</label>
+                            <select id="dropdown" [(ngModel)]="parentrole" class="form-select">
+                                <option *ngFor="let option of parentHirarchy" [value]="option">{{ option }}</option>
+                            </select>
+                            <label for="dropdown">Hirrarchy Level:</label>
+
+                            <select id="dropdown" [(ngModel)]="hierarchy" class="form-select">
+                                <option *ngFor="let option of hierarchyList" [value]="option">{{ option }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card">
+                    <div class="card-body">
+                        <h1>Access Control</h1>
                         <div id="Accesscontrol">
-                            <table>
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Module Name</th>
@@ -34,26 +42,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let permission of userPermissions">
-                                        <td>{{ permission.moduleName }}</td>
-                                        <td>{{ permission.subModuleName }}</td>
+                                    <tr *ngFor="let action of actions">
+                                        <td>{{ action.moduleName }}</td>
+                                        <td>{{ action.subModuleName }}</td>
                                         <td>
-                                            <input type="checkbox" [checked]="false" [disabled]="permission.add !== '1'" />
+                                            <input type="checkbox" [checked]="false"
+                                                [disabled]="action.sabModuleAction.add !== '1'"
+                                                class="form-check-input" />
 
                                         </td>
                                         <td>
-                                            <input type="checkbox" [checked]="false" [disabled]="permission.edit !== '1'" />
+                                            <input type="checkbox" [checked]="false"
+                                                [disabled]="action.sabModuleAction.edit !== '1'"
+                                                class="form-check-input" />
                                         </td>
                                         <td>
-                                            <input type="checkbox" [checked]="false" [disabled]="permission.delete !== '1'" />
+                                            <input type="checkbox" [checked]="false"
+                                                [disabled]="action.sabModuleAction.delete !== '1'"
+                                                class="form-check-input" />
                                         </td>
                                         <td>
-                                            <input type="checkbox" [checked]="false" [disabled]="permission.view !== '1'" />
+                                            <input type="checkbox" [checked]="false"
+                                                [disabled]="action.sabModuleAction.view !== '1'"
+                                                class="form-check-input" />
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
 
+                        </div>
                         </div>
                     </div>
                 </div>
