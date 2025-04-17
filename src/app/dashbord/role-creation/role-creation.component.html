@@ -11,75 +11,120 @@
                 <div class="panel-bd">
                     <div class="card">
                         <div class="card-body">
-                            <h4>User Role</h4><input type="text" [(ngModel)]="userrole" placeholder="Role"
-                                class="form-control">
-                            <h4>User Role Description</h4><input type="text" [(ngModel)]="userroleDescription"
-                                placeholder="Description" class="form-control"><br>
-                            <label for="dropdown">Parent Role:</label>
-                            <select id="dropdown" [(ngModel)]="parentrole" class="form-select">
-                                <option *ngFor="let option of parentHirarchy" [value]="option">{{ option }}</option>
-                            </select>
-                            <label for="dropdown">Hirrarchy Level:</label>
+                            <!-- User Role & Description -->
+                            <div class="d-flex gap-4 mb-3 flex-wrap">
+                                <!-- User Role -->
+                                <div style="max-width: 550px; flex: 1;">
+                                    <label class="form-label fw-bold">User Role:</label>
+                                    <input type="text" [(ngModel)]="userrole" placeholder="Role"
+                                        class="form-control shadow-sm rounded-2 border-primary">
+                                </div>
 
-                            <select id="dropdown" [(ngModel)]="hierarchy" class="form-select">
-                                <option *ngFor="let option of hierarchyList" [value]="option">{{ option }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="card" id="userRoleAssignment">
-                        <div class="card-body">
-                            <h1>Access Control</h1>
-                            <div id="Accesscontrol">
-                                <table id="userRoleAssignment" class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Module Name</th>
-                                            <th>Sub Module Name</th>
-                                            <th>Add</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                            <th>View</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let action of actions">
-                                            <td>{{ action.moduleName }}</td>
-                                            <td>{{ action.subModuleName }}</td>
-                                            <td>
-                                                <input type="checkbox" [checked]="false"
-                                                    [disabled]="action.sabModuleAction.add !== '1'"
-                                                    class="form-check-input" />
+                                <!-- User Role Description -->
+                                <div style="max-width: 550px; flex: 1;">
+                                    <label class="form-label fw-bold">User Role Description:</label>
+                                    <input type="text" [(ngModel)]="userroleDescription" placeholder="Description"
+                                        class="form-control shadow-sm rounded-2 border-primary">
+                                </div>
+                            </div>
 
-                                            </td>
-                                            <td>
-                                                <input type="checkbox" [checked]="false"
-                                                    [disabled]="action.sabModuleAction.edit !== '1'"
-                                                    class="form-check-input" />
-                                            </td>
-                                            <td>
-                                                <input type="checkbox" [checked]="false"
-                                                    [disabled]="action.sabModuleAction.delete !== '1'"
-                                                    class="form-check-input" />
-                                            </td>
-                                            <td>
-                                                <input type="checkbox" [checked]="false"
-                                                    [disabled]="action.sabModuleAction.view !== '1'"
-                                                    class="form-check-input" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <!-- ✅ Submit button -->
-                                <div class="mt-3">
-                                    <button class="btn btn-primary" (click)="addrole()">SaveRole</button>
+                            <!-- Hierarchy Level & Parent Role -->
+                            <div class="d-flex gap-4 mb-3 flex-wrap">
+                                <!-- Hierarchy Level -->
+                                <div style="max-width: 550px; flex: 1;">
+                                    <label for="hierarchyDropdown" class="form-label fw-bold">Hierarchy Level:</label>
+                                    <select id="hierarchyDropdown" [(ngModel)]="hierarchy"
+                                        class="form-select shadow-sm rounded-2 border-primary"
+                                        [ngClass]="{'is-invalid': !hierarchy}">
+                                        <option value="" disabled selected>Select a hierarchy</option>
+                                        <option *ngFor="let item of hirarchyList" [value]="item">{{ item }}</option>
+                                    </select>
+                                </div>
+
+                                <!-- Parent Role -->
+                                <div style="max-width: 550px; flex: 1;">
+                                    <label for="parentRole" class="form-label fw-bold">Parent Role:</label>
+                                    <select id="parentRole" [(ngModel)]="parentrole"
+                                        class="form-select shadow-sm rounded-2 border-primary">
+                                        <option value="" disabled selected>Select a parent role</option>
+                                        <option *ngFor="let option of parentHirarchy" [value]="option">{{ option }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="card shadow-sm rounded-3 mt-4" id="userRoleAssignment" style="border: 1px solid #dee2e6;">
+  <div class="card-body">
+    <h3 class="mb-4 text-primary">Access Control</h3>
+    
+    <div id="Accesscontrol">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Module Name</th>
+              <th scope="col">Sub Module Name</th>
+              <th scope="col">Add</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+              <th scope="col">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let action of actions">
+              <td class="fw-medium">{{ action.moduleName }}</td>
+              <td class="fw-medium">{{ action.subModuleName }}</td>
+              
+              <!-- Add -->
+              <td>
+                <input type="checkbox"
+                       [checked]="false"
+                       [disabled]="action.sabModuleAction.add !== '1'"
+                       class="form-check-input mx-auto d-block" />
+              </td>
+              
+              <!-- Edit -->
+              <td>
+                <input type="checkbox"
+                       [checked]="false"
+                       [disabled]="action.sabModuleAction.edit !== '1'"
+                       class="form-check-input mx-auto d-block" />
+              </td>
+              
+              <!-- Delete -->
+              <td>
+                <input type="checkbox"
+                       [checked]="false"
+                       [disabled]="action.sabModuleAction.delete !== '1'"
+                       class="form-check-input mx-auto d-block" />
+              </td>
+              
+              <!-- View -->
+              <td>
+                <input type="checkbox"
+                       [checked]="false"
+                       [disabled]="action.sabModuleAction.view !== '1'"
+                       class="form-check-input mx-auto d-block" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-end mt-3">
+        <button class="btn btn-success px-4" (click)="addrole()">
+          <i class="bi bi-save me-2"></i>Save Role
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
                 </div>
                 <div>
                 </div>
             </div>
         </div>
     </div>
-</div>

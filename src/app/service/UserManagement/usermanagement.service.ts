@@ -22,4 +22,7 @@ export class UsermanagementService {
   addRoleAndAction(role_submodule_action: any): Observable<any> {
     return this.http.post<any>(`${this.dataShairingService.baseUrl}userRole/roleCreation`,role_submodule_action);
   }
+  getHierachyListService():Observable<any>{
+      return this.http.get<any>(`${this.dataShairingService.baseUrl}userRole/hierarchyList`);
+  }
 }

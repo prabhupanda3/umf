@@ -28,6 +28,7 @@ export class RoleCreationComponent {
 
   ngOnInit() {
     this.accessControl();
+    this.getHirarchyList();
   }
   constructor(private usermangement: UsermanagementService, private renderer: Renderer2) { }
   //accessConrotl
@@ -84,4 +85,20 @@ export class RoleCreationComponent {
     }
     // roleModuleActionBean.ModuleSabmoduleActionDTO=;
   }
+//HirarchyDetails
+hirarchyList!:String[];
+getHirarchyList(){
+this.usermangement.getHierachyListService().subscribe(
+
+  response=>{
+    console.log("Hierarchy List :"+response)
+    this.hirarchyList =response;
+  },
+  error=>{
+
+  }
+);
+}
+
+
 }
