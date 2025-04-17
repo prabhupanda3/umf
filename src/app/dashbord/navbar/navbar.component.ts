@@ -24,7 +24,6 @@ export class NavbarComponent {
   ngOnInit() {
     this.dashbord();
   }
-  
   public dashbord(): void {
     this.moduleasString = sessionStorage.getItem("AssignedModules");
     console.log("Module String :" + this.moduleasString);
@@ -35,7 +34,8 @@ export class NavbarComponent {
         let rowContainer = this.renderer.createElement('div');
         this.renderer.setStyle(rowContainer, 'display', 'flex');
         this.renderer.setStyle(rowContainer, 'flex-wrap', 'wrap');
-        this.renderer.setStyle(rowContainer, 'gap', '16px');
+        this.renderer.setStyle(rowContainer, 'gap', '24px'); // Increased gap
+        this.renderer.setStyle(rowContainer, 'margin-left', '24px'); // Extra margin from left
         this.renderer.setStyle(rowContainer, 'margin-bottom', '16px');
   
         this.moduleList.forEach((module, index) => {
@@ -45,7 +45,7 @@ export class NavbarComponent {
           const moduleNameSpan = this.renderer.createElement('span');
           this.renderer.setProperty(moduleNameSpan, 'innerHTML', module.moduleName);
           this.renderer.setStyle(moduleNameSpan, 'font-weight', 'bold');
-          this.renderer.setStyle(moduleNameSpan, 'color', '#2cb1f8'); // Updated text color
+          this.renderer.setStyle(moduleNameSpan, 'color', '#2cb1f8');
           this.renderer.setStyle(moduleNameSpan, 'padding-left', '8px');
           this.renderer.setStyle(moduleNameSpan, 'font-size', '16px');
           this.renderer.appendChild(newDiv, moduleNameSpan);
@@ -70,7 +70,7 @@ export class NavbarComponent {
             }
   
             // Submodule style
-            this.renderer.setStyle(subDiv, 'backgroundColor', '#cecbcb'); // Updated background
+            this.renderer.setStyle(subDiv, 'backgroundColor', '#cecbcb');
             this.renderer.setStyle(subDiv, 'margin', '4px 0');
             this.renderer.setStyle(subDiv, 'padding', '6px 8px');
             this.renderer.setStyle(subDiv, 'border-radius', '6px');
@@ -78,13 +78,13 @@ export class NavbarComponent {
   
             // Hover effect
             this.renderer.listen(subDiv, 'mouseenter', () => {
-              this.renderer.setStyle(subDiv, 'backgroundColor', '#b9b8b8'); // Slight hover shade
+              this.renderer.setStyle(subDiv, 'backgroundColor', '#b9b8b8');
             });
             this.renderer.listen(subDiv, 'mouseleave', () => {
               this.renderer.setStyle(subDiv, 'backgroundColor', '#d8dcd8');
             });
   
-            this.renderer.setStyle(submoduleNameAnchor, 'color', '#2cb1f8'); // Updated text color
+            this.renderer.setStyle(submoduleNameAnchor, 'color', '#2cb1f8');
             this.renderer.setStyle(submoduleNameAnchor, 'text-decoration', 'none');
             this.renderer.setStyle(submoduleNameAnchor, 'font-size', '16px');
   
@@ -93,14 +93,13 @@ export class NavbarComponent {
           });
   
           // Module container styles
-          this.renderer.setStyle(newDiv, 'backgroundColor', '#f3f3f3'); // Updated background
+          this.renderer.setStyle(newDiv, 'backgroundColor', '#f3f3f3');
           this.renderer.setStyle(newDiv, 'padding', '12px');
           this.renderer.setStyle(newDiv, 'border-radius', '12px');
-          this.renderer.setStyle(newDiv, 'width', '26%');
+          this.renderer.setStyle(newDiv, 'width', '22%'); // Reduced width
           this.renderer.setStyle(newDiv, 'box-shadow', '0 4px 12px rgba(134, 134, 134, 0.1)');
           this.renderer.setStyle(newDiv, 'box-sizing', 'border-box');
-          this.renderer.setStyle(newDiv, 'min-height', '150px'); // Increased height
-
+          this.renderer.setStyle(newDiv, 'min-height', '150px');
   
           this.renderer.appendChild(rowContainer, newDiv);
   
@@ -110,7 +109,8 @@ export class NavbarComponent {
             rowContainer = this.renderer.createElement('div');
             this.renderer.setStyle(rowContainer, 'display', 'flex');
             this.renderer.setStyle(rowContainer, 'flex-wrap', 'wrap');
-            this.renderer.setStyle(rowContainer, 'gap', '16px');
+            this.renderer.setStyle(rowContainer, 'gap', '24px'); // Apply same increased gap again
+            this.renderer.setStyle(rowContainer, 'margin-left', '24px'); // Apply left margin again
             this.renderer.setStyle(rowContainer, 'margin-bottom', '16px');
           }
         });
@@ -119,6 +119,7 @@ export class NavbarComponent {
       console.error("No Module Access", error);
     }
   }
+  
   
   
   

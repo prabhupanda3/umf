@@ -51,54 +51,80 @@ export class RoleCreationComponent {
       });
   }
   addrole() {
+    // Initialize the list to avoid undefined errors
+    this.moduleSabmoduleActionDTOList = [];
+  
+    // Prepare the main role object
     const roleModuleActionBean = new RoleModuleActionBean();
     roleModuleActionBean.roleName = this.roleName;
-    roleModuleActionBean.authority = this.authority;
+    roleModuleActionBean.authority = this.roleName;
+    roleModuleActionBean.hierarchy = this.hierarchy;
     roleModuleActionBean.parentRole = this.parentrole;
     roleModuleActionBean.roleDes = this.roleDes;
-
+  
+    // Get the table
     const roleassignTable = document.getElementById("userRoleAssignment") as HTMLElement;
-    if (roleassignTable != null) {
+    if (roleassignTable) {
       const roleassignTableRows = roleassignTable.getElementsByTagName("tr");
+  
       for (let row = 1; row < roleassignTableRows.length; row++) {
         const cells = roleassignTableRows[row].getElementsByTagName("td");
-        const sabModuleAction = new SabModuleAction();
-        const moduleSabmoduleActionDTO = new ModuleSabmoduleActionDTO();
-
-        for (let cell = 1; cell < cells.length; cell++) {
+  
+        if (cells.length >= 6) {
+          const moduleSabmoduleActionDTO = new ModuleSabmoduleActionDTO();
+          const sabModuleAction = new SabModuleAction();
+  
           moduleSabmoduleActionDTO.moduleName = cells[0].innerText.trim();
           moduleSabmoduleActionDTO.sabmoduleName = cells[1].innerText.trim();
+  
           const addCheckbox = cells[2].querySelector("input") as HTMLInputElement;
           const editCheckbox = cells[3].querySelector("input") as HTMLInputElement;
           const deleteCheckbox = cells[4].querySelector("input") as HTMLInputElement;
           const viewCheckbox = cells[5].querySelector("input") as HTMLInputElement;
-          sabModuleAction.add = addCheckbox.checked ? "1" : "0";
-          sabModuleAction.edit = editCheckbox.checked ? "1" : "0";
-          sabModuleAction.delete = deleteCheckbox.checked ? "1" : "0";
-          sabModuleAction.view = viewCheckbox.checked ? "1" : "0";
-
+  
+          sabModuleAction.add = addCheckbox?.checked ? "1" : "0";
+          sabModuleAction.edit = editCheckbox?.checked ? "1" : "0";
+          sabModuleAction.delete = deleteCheckbox?.checked ? "1" : "0";
+          sabModuleAction.view = viewCheckbox?.checked ? "1" : "0";
+  
           moduleSabmoduleActionDTO.sabModuleAction = sabModuleAction;
+  
+          this.moduleSabmoduleActionDTOList.push(moduleSabmoduleActionDTO);
         }
-        roleModuleActionBean.moduleSabmoduleActionDTOList.push(moduleSabmoduleActionDTO);
       }
-      console.log("Role creation :" + roleModuleActionBean);
+  
+      // Assign the collected list to the bean
+      roleModuleActionBean.moduleSabmoduleActionDTO = this.moduleSabmoduleActionDTOList;
+  
+      // Logging (useful during development)
+      console.log("Role creation :", roleModuleActionBean);
     }
-    // roleModuleActionBean.ModuleSabmoduleActionDTO=;
+  
+    // Make the backend call
+    this.usermangement.addRoleAndAction(roleModuleActionBean).subscribe(
+      response => {
+        console.log("Role created successfully ====>", response);
+      },
+      error => {
+        console.error("Error while creating role:", error);
+      }
+    );
   }
-//HirarchyDetails
-hirarchyList!:String[];
-getHirarchyList(){
-this.usermangement.getHierachyListService().subscribe(
+  
+  //HirarchyDetails
+  hirarchyList!: String[];
+  getHirarchyList() {
+    this.usermangement.getHierachyListService().subscribe(
 
-  response=>{
-    console.log("Hierarchy List :"+response)
-    this.hirarchyList =response;
-  },
-  error=>{
+      response => {
+        console.log("Hierarchy List :" + response)
+        this.hirarchyList = response;
+      },
+      error => {
 
+      }
+    );
   }
-);
-}
 
 
 }

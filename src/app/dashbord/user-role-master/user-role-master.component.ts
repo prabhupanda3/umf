@@ -72,6 +72,7 @@ export class UserRoleMasterComponent {
   getAllChildRoleDetails() {
     this.usermangement.getAllChildRoleDetails().subscribe(response => {
       this.roles = response;
+      console.log(this.roles);
       setTimeout(() => {
         if ($.fn.dataTable.isDataTable('#allChildRole')) {
           $('#allChildRole').DataTable().clear().rows.add(this.roles).draw(); // Refresh the DataTable

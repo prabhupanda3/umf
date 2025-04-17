@@ -5,6 +5,7 @@ export class RoleModuleActionBean {
     authority!:string;
     roleDes!:string;
     parentRole!:string;
-    moduleSabmoduleActionDTOList!:ModuleSabmoduleActionDTO[];
+    hierarchy!:string;
+    moduleSabmoduleActionDTO!:ModuleSabmoduleActionDTO[];
 
 }
