@@ -10,33 +10,46 @@
           </div>
         </div>
       </div>
+
       <div style="margin-top: 2%;" class="panel-body table-responsive">
-        <div>
-          <button (click)="documentExport('csv')" class="btn btn-secondary">CSV</button>
-          <button (click)="documentExport('excel')" class="btn btn-secondary">Excel</button>
-          <button (click)="documentExport('pdf')" class="btn btn-secondary">PDF</button>
+        <div class="mb-3 d-flex justify-content-end gap-2">
+          <button (click)="documentExport('csv')" class="btn btn-outline-success btn-sm mr-2">Export CSV</button>
+          <button (click)="documentExport('excel')" class="btn btn-outline-primary btn-sm mr-2">Export Excel</button>
+          <button (click)="documentExport('pdf')" class="btn btn-outline-danger btn-sm">Export PDF</button>
         </div>
-        <table id="allChildRole" class="display" style="width: 100%;">
-          <thead style="height: 5%;background-color: #128c7e;color: #ffffff;font:small-caption">
+
+        <table id="allChildRole" class="table table-striped table-hover">
+          <thead class="thead-dark">
             <tr>
               <th>Authority Name</th>
               <th>Role Name</th>
               <th>Parent Role</th>
               <th>Description</th>
+              <th>Actions</th>
+
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let role of roles">
-              <td class="centered-cell ">{{role.authorityName}}</td>
-              <td class="centered-cell ">{{role.roleName}}</td>
-              <td class="centered-cell ">{{role.parentRole}}</td>
-              <td class="centered-cell ">{{role.roleDesc}}</td>
+              <td class="centered-cell">{{role.authority}}</td>
+              <td class="centered-cell">{{role.roleName}}</td>
+              <td class="centered-cell">{{role.parentRole}}</td>
+              <td class="centered-cell">{{role.roleDes}}</td>
+              <td class="centered-cell">
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn btn-secondary btn-sm" [routerLink]="['/roleupadte', role.authority]">Edit</button>
+                  <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                </div>
+              </td>
+              
+
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
   <style>
     table {
       width: 100%;
@@ -49,4 +62,10 @@
       padding: 8px;
       text-align: left;
     }
+
+    .centered-cell {
+      text-align: center;
+      vertical-align: middle;
+    }
   </style>
+</div>

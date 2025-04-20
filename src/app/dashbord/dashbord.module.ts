@@ -14,6 +14,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { UserMasterComponent } from './user-master/user-master.component';
 import { UserRoleMasterComponent } from './user-role-master/user-role-master.component';
 import { RoleCreationComponent } from './role-creation/role-creation.component';
+import { RoleUpdateComponent } from './role-update/role-update.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -26,6 +28,7 @@ import { RoleCreationComponent } from './role-creation/role-creation.component';
         UserMasterComponent,
         UserRoleMasterComponent,
         RoleCreationComponent,
+        RoleUpdateComponent,
         
     ],
     exports: [
@@ -40,7 +43,8 @@ import { RoleCreationComponent } from './role-creation/role-creation.component';
         MatFormFieldModule,
         MatInputModule,MatButtonModule,
         HighchartsChartModule,
-        CanvasJSAngularChartsModule ,MatFormFieldModule,MatOptionModule
+        CanvasJSAngularChartsModule ,MatFormFieldModule,MatOptionModule,
+        RouterModule
     ]
 })
 export class DashbordModule { 

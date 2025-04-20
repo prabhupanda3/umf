@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DataShairingService } from '../data-shairing.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { RoleModuleActionBean } from 'src/app/beans/role-module-action-bean';
 
 @Injectable({
@@ -20,10 +20,14 @@ export class UsermanagementService {
   getAllRoleName(): Observable<any> {
     return this.http.get<any>(`${this.dataShairingService.baseUrl}userRole/listOfChildRole`);
   }
-  addRoleAndAction(role_submodule_action: RoleModuleActionBean): Observable<any> {
-    return this.http.post<any>(`${this.dataShairingService.baseUrl}userRole/roleCreation`,role_submodule_action);
+  addRoleAndAction(role_submodule_action: RoleModuleActionBean): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`${this.dataShairingService.baseUrl}userRole/roleCreation`,role_submodule_action,{ observe: 'response'});
   }
   getHierachyListService():Observable<any>{
       return this.http.get<any>(`${this.dataShairingService.baseUrl}userRole/hierarchyList`);
+  }
+  getAllParentRole():Observable<any>{
+    return this.http.get<any>(`${this.dataShairingService.baseUrl}userRole/getallparentrole`);
+
   }
 }

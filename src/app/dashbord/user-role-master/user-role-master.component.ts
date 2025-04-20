@@ -5,6 +5,8 @@ import 'datatables.net'; // Import DataTables
 import 'datatables.net-buttons';
 import { ExportService } from 'src/app/service/export.service';
 import { Router } from '@angular/router';
+import { Role } from 'src/app/beans/role';
+import { SabModuleAction } from 'src/app/beans/sab-module-action';
 
 @Component({
   selector: 'app-user-role-master',
@@ -33,6 +35,9 @@ export class UserRoleMasterComponent {
   roleName!: String;
   parentRole!: String;
   roleDesc!: String;
+  isActive = false;
+  role!:Role;
+  sabmoduleActions!:SabModuleAction[];
   @ViewChild('allChildRole') table!: ElementRef;
 
   ngOnInit() {
@@ -44,7 +49,7 @@ export class UserRoleMasterComponent {
     // Initialize DataTables after the view is initialized
 
   }
-  constructor(private usermangement: UsermanagementService, private exportServices: ExportService,private router: Router) {
+  constructor(private usermangement: UsermanagementService, private exportServices: ExportService, private router: Router) {
   }
   public isactivateButton(): boolean {
     this.roleaccess = sessionStorage.getItem("ROLE");
@@ -93,7 +98,7 @@ export class UserRoleMasterComponent {
         response.forEach((res: {
           moduleName: string; subModuleName: String; sabModuleAction: any;
         }) => {
-          
+
           this.router.navigate(['/roleCreation']);
           console.log("Hi this is response :" + res.sabModuleAction.actionID);
         });
@@ -104,31 +109,31 @@ export class UserRoleMasterComponent {
     );
   }
 
-// Extract table data dynamically
-getTableData(): any[] {
-  const table = document.getElementById('allChildRole') as HTMLTableElement;
-  
-  const rows = table.rows;
-  const data: any[] = [];
+  // Extract table data dynamically
+  getTableData(): any[] {
+    const table = document.getElementById('allChildRole') as HTMLTableElement;
 
-  // Loop through table rows
-  for (let i = 1; i < rows.length; i++) { // Skip the header row
-    const cells = rows[i].cells;
-    const rowData: any = {};
+    const rows = table.rows;
+    const data: any[] = [];
 
-    // Populate rowData with values from the table
-    rowData['AuthorityName'] = cells[0]?.innerText || '';
-    rowData['RoleName'] = cells[1]?.innerText || '';
-    rowData['ParentRole'] = cells[2]?.innerText || '';
-    rowData['Description'] = cells[3]?.innerText || '';
-    
-    data.push(rowData);
+    // Loop through table rows
+    for (let i = 1; i < rows.length; i++) { // Skip the header row
+      const cells = rows[i].cells;
+      const rowData: any = {};
+
+      // Populate rowData with values from the table
+      rowData['AuthorityName'] = cells[0]?.innerText || '';
+      rowData['RoleName'] = cells[1]?.innerText || '';
+      rowData['ParentRole'] = cells[2]?.innerText || '';
+      rowData['Description'] = cells[3]?.innerText || '';
+
+      data.push(rowData);
+    }
+
+    return data;
   }
 
-  return data;
-}
-
-  documentExport( format: string) {
+  documentExport(format: string) {
     const data = this.getTableData(); // Get the table data dynamically
 
     if (format == 'csv') {
@@ -142,5 +147,25 @@ getTableData(): any[] {
     }
   }
 
+
+
+  getRoleDetails():boolean{
+       let roleDetails=sessionStorage.getItem('ROLE');
+       if(roleDetails!=null){
+        try{
+         this.role=JSON.parse(roleDetails);
+         this.sabmoduleActions.push( this.role.sabModuleAction);
+         for(let l=1;l<=this.sabmoduleActions.length-1;l++){
+          
+
+         }
+
+        }catch(error){
+
+        }
+
+       }
+    return true;
+  }
 
 }

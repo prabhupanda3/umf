@@ -109,6 +109,13 @@
                     <i class="bi bi-save me-2"></i>Save Role
                   </button>
                 </div>
+                <!-- Popup Window -->
+                <div class="popup-overlay" *ngIf="isOpen">
+                  <div class="popup-content">
+                    <h3>{{roleCreated}}</h3>
+                    
+                  </div>
+                </div>
               </div>
             </div>
           </div>

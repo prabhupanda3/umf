@@ -8,6 +8,7 @@ import { UserManagementComponent } from './dashbord/user-management/user-managem
 import { UserMasterComponent } from './dashbord/user-master/user-master.component';
 import { UserRoleMasterComponent } from './dashbord/user-role-master/user-role-master.component';
 import { RoleCreationComponent } from './dashbord/role-creation/role-creation.component';
+import { RoleUpdateComponent } from './dashbord/role-update/role-update.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,9 @@ const routes: Routes = [
  {path:'usermanagement',component:UserManagementComponent},
  {path:'userMaster',component:UserMasterComponent},
  {path:'userRoleMaster',component:UserRoleMasterComponent},
- {path:'roleCreation',component:RoleCreationComponent}
+ {path:'roleCreation',component:RoleCreationComponent},
+ {path:'roleupadte/:authority',component:RoleUpdateComponent},
+
 ];
 
 @NgModule({

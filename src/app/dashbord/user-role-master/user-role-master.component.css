@@ -1,0 +1,19 @@
+thead th {
+    background-color: #128c7e;
+    color: white;
+  }
+  
+  .card-header {
+    position: relative;
+  }
+  
+  table td,
+  table th {
+    vertical-align: middle;
+  }
+  
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  

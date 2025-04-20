@@ -12,6 +12,8 @@ import { Module } from './dashbord/navbar/module';
 import { SubModule } from './dashbord/navbar/sub-module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './chat/chat.component';
+import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
@@ -21,13 +23,14 @@ import { ChatComponent } from './chat/chat.component';
     bootstrap: [AppComponent],
     imports: [
       BrowserModule,
-     
       LoginModule,
       DashbordModule,
       FormsModule,
       HttpClientModule,
       AppRoutingModule,
       BrowserAnimationsModule,
+      MatDialogModule
+      
       
        
        

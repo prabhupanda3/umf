@@ -1,49 +1,15 @@
-#outerdiv{
-    background-color: #ec2d76;
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
 }
-#innerDiv{
-    height: 100%;
-    width: 100%;
-    margin-top: -20%;
-   background-color: #ec2d76;
+.h-custom {
+height: calc(100% - 73px);
 }
-#login{
-    height: 20%;
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
 }
-#span{
-    text:rgb(60, 110, 216);
-    font-size: 20%;
 }
-#formInside{
-    margin-top: 100%;
-    margin-left: 10%;
-}
-#loginForm{
-    height: 300%;
-    width: 40%;
-    border-color: solid rgb(113, 113, 221);
-    background-color:#900C3F;
-    margin-left: 30%;
-    margin-top: 10%;
-    
-}
-#username{
-    height: 30%;
-    width: 50%;
-    margin-left: 10%;
-    margin-top: 2%;
-}
-#password{
-    height: 20%;
-    width: 50%;
-    margin-left: 10%;
-    margin-top: 2%;
-}
-#button{
-    height: 30%;
-    width: 15%;
-    margin-left: 20%;
-    margin-top: 2%;
-    color: blue;
-}
-
