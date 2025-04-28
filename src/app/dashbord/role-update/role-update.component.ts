@@ -13,7 +13,10 @@ import { SabModuleAction } from 'src/app/beans/sab-module-action';
   styleUrls: ['./role-update.component.css']
 })
 export class RoleUpdateComponent {
-  constructor(private router: Router,private roleUpdateService: RoleUpdateService, private usermangement: UsermanagementService, private route: ActivatedRoute) { }
+  constructor(private router: Router,
+              private roleUpdateService: RoleUpdateService,
+              private usermangement: UsermanagementService,
+              private route: ActivatedRoute) { }
 
   roleName!: string;
   roleDes!: string;

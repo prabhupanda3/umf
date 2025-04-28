@@ -1,0 +1,105 @@
+<div class="wrapper">
+    <div class="content-wrapper">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>USER MASTER</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form id="UserRegistrationForm" (ngSubmit)="userRegistration()" style="margin-left: 10%;">
+                    <div class="row">
+                        <div class="col-md-4 mb-3 ms-5">
+                            <div class="d-flex align-items-center">
+                                <label for="userId" class="mb-2" style="flex-shrink: 0; width: 120px;">User ID<span
+                                        class="required-star">*</span></label>
+                                <input type="text" class="form-control" id="userId" name="userId" [(ngModel)]="userId"
+                                    placeholder="Enter User ID" style="flex-grow: 1;">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 ms-5">
+                            <div class="d-flex align-items-center">
+                                <label for="userName" class="mb-2" style="flex-shrink: 0; width: 120px;">User Name<span
+                                        class="required-star">*</span></label>
+                                <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="userName"
+                                    placeholder="Enter User Name" style="flex-grow: 1;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3 ms-5">
+                            <div class="d-flex align-items-center">
+                                <label for="password" class="mb-2" style="flex-shrink: 0; width: 120px;">Password<span
+                                        class="required-star">*</span></label>
+                                <input type="password" class="form-control" id="password" name="password"  [(ngModel)]="password"
+                                    placeholder="Enter Password" style="flex-grow: 1;">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 ms-5">
+                            <div class="d-flex align-items-center">
+                                <label for="confirmPassword" class="mb-2" style="flex-shrink: 0; width: 120px;">Confirm
+                                    Password<span class="required-star">*</span></label>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"[(ngModel)]="confirmPassword"
+                                    placeholder="Re-enter Password" style="flex-grow: 1;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3 ms-5">
+                            <div class="d-flex align-items-center">
+                                <label for="email" class="mb-2" style="flex-shrink: 0; width: 120px;">E-Mail<span
+                                        class="required-star">*</span></label>
+                                <input type="email" class="form-control" id="email" name="email"[(ngModel)]="email"
+                                    placeholder="Enter E-Mail" style="flex-grow: 1;">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 ms-5">
+                            <div class="d-flex align-items-center mb-4">
+                                <label for="mobile" class="mb-2" style="flex-shrink: 0; width: 120px;">Role
+                                    <span class="required-star">*</span></label>
+                                <div class="input-group mb-4" style="flex-grow: 1;">
+                                    <select id="hierarchyDropdown" [(ngModel)]="role"
+                                        class="form-select shadow-sm rounded-2 border-primary">
+                                        <option value="" disabled selected>Select a Role</option>
+                                        <option *ngFor="let role of roleList" [value]="role">{{ role }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3 ms-5">
+                            <div class="d-flex align-items-center mb-4">
+                                <label for="mobile" class="mb-2" style="flex-shrink: 0; width: 120px;">Mobile
+                                    Number<span class="required-star">*</span></label>
+                                <div class="input-group mb-4" style="flex-grow: 1;">
+                                    <span class="input-group-text">+91</span>
+                                    <input type="text" class="form-control" id="mobile" name="mobile"
+                                        placeholder="Enter Mobile Number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-2 ms-5">
+                            <div class="d-flex align-items-center">
+                                <label for="address" class="mb-3" style="flex-shrink: 0; width: 120px;">Address</label>
+                                <textarea class="form-control" id="address" name="address" rows="4"
+                                    placeholder="Enter Address" style="flex-grow: 1;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="text-center mb-4">
+                            <button type="submit" class="btn btn-primary" >Register User</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <small>&copy; 2025 Meter Data Management System</small>
+        </div>
+    </div>
+</div>

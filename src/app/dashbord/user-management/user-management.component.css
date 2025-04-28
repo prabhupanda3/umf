@@ -1,8 +1,56 @@
-#userManagement{
-    background-color: #f3f3f3;
-    margin-top: 1%;
-    margin-left: 1%;
+#heading{
+    background-color:#075E54;
+    width: 100%;
+    height: 5%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    size: 10px;
 }
-#userMaster{
 
+  .wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel{
+    height: 100%;
+  }
+.panel-body{
+    height: 100%;
+    padding-left: 3%;
+    padding-top: 4%;
+    padding-bottom: 12%;
+}
+  .panel-heading {
+    background-color: #075E54;
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .panel-title h4 {
+    color: #fff;
+    text-align: center;
+    margin: 0;
+  }
+
+  .form-group label {
+    font-weight: bold;
+  }
+
+  .panel-footer {
+    padding: 15px;
+    text-align: center;
+    background-color: #f1f1f1;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .required-star {
+    color: red;
+    margin-left: 5px;
+  }
+  .content-wrapper {
+    flex: 1;
+    padding: 20px; /* Optional for spacing */
 }

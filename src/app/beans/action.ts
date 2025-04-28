@@ -1,6 +1,6 @@
 export class Action {
     moduleName!:string;
-    subModuleName!:string;
+    sabmoduleName!:string;
     add!:string;
     edit!:string;
     delete!:string;

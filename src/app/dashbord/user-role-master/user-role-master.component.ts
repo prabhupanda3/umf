@@ -36,9 +36,10 @@ export class UserRoleMasterComponent {
   parentRole!: String;
   roleDesc!: String;
   isActive = false;
-  role!:Role;
-  sabmoduleActions!:SabModuleAction[];
+  role!: Role;
+  sabmoduleActions!: SabModuleAction[];
   @ViewChild('allChildRole') table!: ElementRef;
+
 
   ngOnInit() {
     this.isactivateButton();
@@ -49,11 +50,12 @@ export class UserRoleMasterComponent {
     // Initialize DataTables after the view is initialized
 
   }
-  constructor(private usermangement: UsermanagementService, private exportServices: ExportService, private router: Router) {
+  constructor(private usermangement: UsermanagementService,
+              private exportServices: ExportService,
+              private router: Router) {
   }
   public isactivateButton(): boolean {
     this.roleaccess = sessionStorage.getItem("ROLE");
-
     try {
       this.moduleDetails = JSON.parse(this.roleaccess);
       this.active = false; // Initialize active to false
@@ -96,7 +98,7 @@ export class UserRoleMasterComponent {
     this.usermangement.getUserModuleSabmodule().subscribe(
       response => {
         response.forEach((res: {
-          moduleName: string; subModuleName: String; sabModuleAction: any;
+          moduleName: string; sabmoduleName: String; sabModuleAction: any;
         }) => {
 
           this.router.navigate(['/roleCreation']);
@@ -149,23 +151,32 @@ export class UserRoleMasterComponent {
 
 
 
-  getRoleDetails():boolean{
-       let roleDetails=sessionStorage.getItem('ROLE');
-       if(roleDetails!=null){
-        try{
-         this.role=JSON.parse(roleDetails);
-         this.sabmoduleActions.push( this.role.sabModuleAction);
-         for(let l=1;l<=this.sabmoduleActions.length-1;l++){
-          
+  getRoleDetails(): boolean {
+    let roleDetails = sessionStorage.getItem('ROLE');
+    if (roleDetails != null) {
+      try {
+        this.role = JSON.parse(roleDetails);
+        this.sabmoduleActions.push(this.role.sabModuleAction);
+        for (let l = 1; l <= this.sabmoduleActions.length - 1; l++) {
 
-         }
-
-        }catch(error){
 
         }
 
-       }
+      } catch (error) {
+
+      }
+
+    }
     return true;
+  }
+  deleteRoleByAutherityName(authority: String) {
+    console.log("Autherity name :" + authority);
+    this.usermangement.deleteRoleByAuthorityName(authority).subscribe(
+      resopnse => {
+
+      }, error => {
+
+      });
   }
 
 }

@@ -6,5 +6,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-master.component.css']
 })
 export class UserMasterComponent {
+  roleaccess!:any;
+  moduleDetails!:any;
+  active=false;
+  public isactivateButton(): boolean {
+    this.roleaccess = sessionStorage.getItem("ROLE");
+    try {
+      this.moduleDetails = JSON.parse(this.roleaccess);
+      this.active = false; // Initialize active to false
+      for (const smactions of this.moduleDetails.sabmoduleAction) {
+
+        if (smactions.sabmodule.submoduleName === "UserMaster") {
+          if (smactions.add == "1") {
+            console.log("Add" + smactions.sabmodule.add)
+            this.active = true;
+            break;
+          }
+        }
+      }
+      return this.active;
+    } catch (error) {
+      console.log("Error parsing role access:", error);
+      return false; // Default return false on error
+    }
+  }
+
 
 }

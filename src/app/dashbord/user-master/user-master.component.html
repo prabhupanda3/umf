@@ -1,3 +1,25 @@
-<div class="container-fluid" style="background-color: #b7ccea;">
-    
+<div class="wrapper">
+    <div class="content-wrapper">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="heading">
+                <div class="panel-title">
+                    <h4 style="margin-top: 1%;padding-left: 45%;color:#ffffff">USER MASTER</h4>
+                    <div class="btn-group pull-right clearfix" style="margin-left: 95%;margin-top: -3%;">
+                        <button class="btn text-white" [routerLink]="['/usermanagement']"
+                            [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }"
+                            [disabled]="!isactivateButton()">
+                            ADD
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+
+            </div>
+            <div class="panel-footer">
+
+            </div>
+        </div>
+    </div>
 </div>
