@@ -60,7 +60,7 @@ export class UserManagementComponent {
           console.log("Second if block"+user.password+"UserName :"+ user.userIdName+" user.username  :"+user.username)
 
           this.usermanagementService.addUser(user).subscribe(response => {
-
+this.userMaster();
           }, error => {
 
           });

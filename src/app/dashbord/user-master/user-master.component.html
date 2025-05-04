@@ -10,12 +10,39 @@
                             [disabled]="!isactivateButton()">
                             ADD
                         </button>
-
                     </div>
                 </div>
             </div>
             <div class="panel-body">
+                <div id="tablecard">
+                    <table id="userTable" class="table table-stripted align-middle text-center ">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">User Id </th>
+                                <th scope="col">User FullName</th>
+                                <th scope="col">User Role</th>
+                                <th scope="col">User Address</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Mobile</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let user of userList">
+                            <tr>
+                                <td class="fw-medium">{{ user.username }}</td>
+                                <td class="fw-medium">{{ user.userIdName }}</td>
+                                <td class="fw-medium">{{ user.autherity }}</td>
+                                <td class="fw-medium">{{ user.address }}</td>
+                                <td class="fw-medium">{{ user.email }}</td>
+                                <td class="fw-medium">{{ user.mobileNumber }}</td>
+                                <td class="fw-medium">{{ user.status }}</td>
+                                <td class="fw-medium">{{ user.status }}</td>
 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="panel-footer">
 

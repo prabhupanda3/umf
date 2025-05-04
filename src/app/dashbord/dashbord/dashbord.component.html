@@ -1,54 +1,44 @@
-<div class="container">
-  <div class="row">
-    <div id="hirarchySelector" class="col-8">
+<div class="wrapper">
+  <div class="content-wrapper">
 
-    </div>
-    <div id="element" class="col-4">
-      <input type="date" [(ngModel)]="selectedDate" class="form-control form-control-sm" id="datedata">
-      <button mat-button (click)="getReport()" class="btn btn-primary">GetReport</button>
-    </div>
-  </div>
-  <div class="row" id="topbar">
-    <div class="col-md-12" id="cscolumn">
-      <div class="penal" id="penalheading">
-        <div class="penal-heading" id="heading">
-          <div class="penal-title" id="titelbar">
-            <h4>Live Status</h4>
-          </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <h4 style="color: #ffffff;"> DASHBOARD</h4>
         </div>
-        <div class="penal penal-bd">
-          <div class="container-md" id="liveCommcontainer">
-            <div class="card mb-3" style="background-color: #c4c5c5;">
-              <div class="card-header text-white text-center" style="background-color: #c6c6c9; padding-left: 20%;">
-                <h4>DayLiveCommunication</h4>
-              </div>
-              <div class="card-body">
-                <div class="row" id="commstatus">
-                  <div class="col-sm-4" id="Agcomm">
-                    <div id="cs-container">
-                    </div>
-                  </div>
-                  <div class="col-sm-4" id="nogagcol">
-                    <div id="nonagcomm">
-                    </div>
-                  </div>
-                  <div class="col-sm-4" id="total-col">
-                    <div id="total-comm">
-                    </div>
-                  </div>
+      </div>
+      <div class="panel-body">
+        <div id="hierarchySelector">
+        </div>
+        <div class="container-fluid	">
+          <div class="row">
+            <div class="col-md-auto d-flex flex-column bg-light p-3" id="communicationStatus">
+              <div class="d-flex ">
+                <div id="cs-container" class=" p-2 flex-fill ">
+                  <!--AG Communicating-->>
+                </div>
+                <div id="nonagcomm" class=" p-2  flex-fill">
+                  <!-- Non-AG Communication content -->
+                </div>
+                <div id="HighVoltage" class=" p-2  flex-fill">
+                  <!-- Non-AG Communication content -->
+                </div>
+                <div id="total-comm" class="p-2  flex-fill">
+                  <!-- Total Communication content -->
                 </div>
               </div>
             </div>
+            <div class="col">Column 2</div>
+            <div class="col">Column 3</div>
+          </div>
+          <div class="row">
+
           </div>
         </div>
       </div>
-    </div>
+      <div class="panel-footer">
 
-  </div>
-  <div class="col-sm">
-    Last Week Communication
-  </div>
-  <div class="col-sm">
-    Signal Strength
+      </div>
+    </div>
   </div>
 </div>

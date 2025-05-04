@@ -24,7 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     imports: [
       BrowserModule,
       LoginModule,
-      DashbordModule,
+     
       FormsModule,
       HttpClientModule,
       AppRoutingModule,

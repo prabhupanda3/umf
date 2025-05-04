@@ -7,4 +7,7 @@ export class User {
     address!:string;
     autherity!:string;
     confirmPassword!:string;
+    role!:string;
+    status!:string;
+    
 }

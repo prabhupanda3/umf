@@ -44,4 +44,7 @@ export class UsermanagementService {
   addUser(user:User):Observable<string> {
     return this.http.post<string>(`${this.dataShairingService.baseUrl}usermanagement/createNewUser`,user);
   }
+  getUserList():Observable<User[]>{
+    return this.http.get<User[]>(`${this.dataShairingService.baseUrl}usermanagement/getAllChildUser`);
+  }
 }

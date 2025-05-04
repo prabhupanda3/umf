@@ -1,111 +1,96 @@
-#hirarchySelector{
-    background-color: #ffffff;
-   
+#heading {
+  background-color: #075E54;
+  width: 100%;
+  height: 5%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  size: 10px;
 }
-#element{
-    background-color: #ffffff;
-   float: right;
-   margin-top: -4%;
-   padding: 2;
+
+#hierarchySelector {
+  width: 100%;
+  height: 5%;
 }
-#datedata{
-    height: 80%;
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-#Communication-tag{
-    padding: auto;
-    height: 10%;
-    width: 20%;
+
+.panel-default {
+  height: 100%;
+  width: 100%;
+  flex: 1;
 }
-#penalheading{
-    border-radius: 4px 4px;
+
+.panel {
+  height: 100%;
+  width: 100%;
 }
-#heading{
-    border-radius: 4px 4px;
-    background-color: #ffffff;
+
+.panel-body {
+  height: 100%;
+
+  padding-bottom: 12%;
 }
-#titelbar{
-    background-color: #c9c9c9;
+
+.panel-heading {
+  background-color: #075E54;
+  padding: 7px;
+  height: 0.2%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
-#topbar{
-    height: 5%;
-    background-color: #ffffff;
-      }
-#cscolumn{
-    height: 30%;
-    width: 40%;
+
+.panel-title h4 {
+  color: #fff;
+  text-align: center;
+
 }
-#commstatus{
-  border: solid #ce12129d;
-  
+
+.form-group label {
+  font-weight: bold;
 }
-#Agcomm{
-  height: 45%;
-  width: 35%;
-  position: relative;
-border-radius: 2px;
+
+.panel-footer {
+  padding: 15px;
+  text-align: center;
+  background-color: #f1f1f1;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
+
+.required-star {
+  color: red;
+  margin-left: 5px;
+}
+
+.content-wrapper {
+  flex: 1;
+
+}
+
+#communicationStatus {
+  background-color: #ffffff;
+  border-radius: 7%;
+  height: 170px;
+  margin-top: 0.5%;
+}
+
 #cs-container {
-    width: 100%; /* Or set a max-width */
-    height: 0;
-    background-color: #cccbcb;
-    padding-bottom: 50%; /* Aspect ratio, e.g., 50% for a 2:1 ratio */
-    position: relative;
-  }
-  #cs-container > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
- 
- 
-  #nogagcol{
-    height: 45%;
-    width: 35%;
-    position: relative;
-   left:30%;
-  border-radius: 2px;
-  margin-top: -17.5%;
-  }
-  #nonagcomm{
-    width: 100%; /* Or set a max-width */
-    height: 0;
-    background-color: #ffffff;
-    padding-bottom: 50%; /* Aspect ratio, e.g., 50% for a 2:1 ratio */
-    position: relative;
-  }
-  #nonagcomm > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  #total-col{
-    height: 45%;
-    width: 35%;
-  border-radius: 2px;
-  position: relative;
-   left:65%;
-  border-radius: 2px;
-  margin-top: -17.5%;
-  
-  }
-  #total-comm{
-    width: 100%; /* Or set a max-width */
-    height: 0;
-    background-color: #ffffff;
-    padding-bottom: 50%; /* Aspect ratio, e.g., 50% for a 2:1 ratio */
-    position: relative;
-  }
-  #total-comm > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  #liveCommcontainer{
-    background-color: rgb(255, 255, 255);
-  }
+  height: 35%;
+
+}
+
+#nonagcomm {
+  height: 35%;
+}
+
+#total-comm {
+  height: 35%;
+
+}
+#HighVoltage{
+  height: 35%;
+
+}

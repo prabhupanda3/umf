@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { User } from 'src/app/beans/User/user';
+import { UsermanagementService } from 'src/app/service/UserManagement/usermanagement.service';
 
 @Component({
   selector: 'app-user-master',
@@ -9,6 +11,14 @@ export class UserMasterComponent {
   roleaccess!:any;
   moduleDetails!:any;
   active=false;
+  userList!:User[];
+
+  constructor(private usermanagementService:UsermanagementService){
+
+  }
+  ngOnInit(){
+  this.availableUserList();
+}
   public isactivateButton(): boolean {
     this.roleaccess = sessionStorage.getItem("ROLE");
     try {
@@ -29,6 +39,15 @@ export class UserMasterComponent {
       console.log("Error parsing role access:", error);
       return false; // Default return false on error
     }
+  }
+  public availableUserList(){
+    this.usermanagementService.getUserList().subscribe(
+      response=>{
+        this.userList=response;
+        console.log("Executed")
+      },error=>{
+
+    });
   }
 
 

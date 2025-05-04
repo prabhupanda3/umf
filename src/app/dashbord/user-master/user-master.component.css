@@ -5,3 +5,37 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     size: 10px;
 }
+#tablecard{
+    margin-top: 2%;
+    margin-left: 3%;
+    margin-right: 3%;
+    border-radius: 10%;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    border-spacing: 0;
+    border: 5px solid #ccc;
+    border-collapse: separate; /* Required for border-radius */
+
+}
+thead th {
+    background-color: #128c7e;
+    color: white;
+    border-bottom: 0.5px solid #ccc;
+
+  }
+ 
+  td {
+    border: 0.1px solid rgb(139, 172, 189);
+    padding: 8px;
+    text-align: left;
+    border-bottom: 0.5px solid #ccc;
+
+  }
+
+  .centered-cell {
+    text-align: center;
+    vertical-align: middle;
+  }
