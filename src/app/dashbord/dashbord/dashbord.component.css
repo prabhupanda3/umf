@@ -72,14 +72,13 @@
 
 #communicationStatus {
   background-color: #ffffff;
-  border-radius: 7%;
   height: 170px;
   margin-top: 0.5%;
 }
 
 #cs-container {
   height: 35%;
-
+background-color: #ffffff;
 }
 
 #nonagcomm {
@@ -93,4 +92,7 @@
 #HighVoltage{
   height: 35%;
 
+}
+#lastSevendaysCommunication{
+  
 }
