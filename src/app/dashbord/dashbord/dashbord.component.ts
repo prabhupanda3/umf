@@ -1,6 +1,7 @@
 import { PercentPipe } from '@angular/common';
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { error } from 'jquery';
 import { DashboardService } from 'src/app/service/Dashboard/dashboard.service';
 
 @Component({
@@ -22,8 +23,8 @@ export class DashbordComponent {
   selectedValue!: string | null;
   selectedLevelId!: string | null;
   selectedDate: string = '';
-
-
+  hierarchyName: string = '';
+lastSevenDaysMap!:Map<String,number>;
 
   constructor(private dashboardService: DashboardService,
     private renderer: Renderer2, private el: ElementRef) { }
@@ -32,11 +33,12 @@ export class DashbordComponent {
     this.getReport();
   }
   hierarchyHolder!: Map<string, Map<number, string>>;
-  hload: { username: string | null, hierarchyId: number, hirarchyLevel: number, date: string } = {
+  hload: { username: string | null, hierarchyId: number, hirarchyLevel: number, date: string, hierarchyName: string | null } = {
     username: sessionStorage.getItem('username'),
     hierarchyId: this.hid,
     hirarchyLevel: this.leveId,
     date: this.selectedDate,
+    hierarchyName: this.hierarchyName
   };
 
   chatRout(): void {
@@ -118,8 +120,9 @@ export class DashbordComponent {
             this.hload.hierarchyId = Number(this.selectedValue);
             this.selectedLevelId = (event.target as HTMLSelectElement).id;
             this.hload.hirarchyLevel = Number(this.selectedLevelId);
-
-            console.log(this.hload.hierarchyId + "======" + this.hload.hirarchyLevel);
+            const selectEl = event.target as HTMLSelectElement;
+            this.hload.hierarchyName = selectEl.options[selectEl.selectedIndex].text;
+            console.log(this.hload.hierarchyId + "======" + this.hload.hirarchyLevel + "  ===== " + this.hload.hierarchyName);
 
             this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
               (recivedData: Map<string, Map<number, string>>) => {
@@ -246,6 +249,7 @@ export class DashbordComponent {
 
   public getReport() {
     this.getDayLiveCommunicationSummary();
+    this.getLastSevenDaysCommunicationStatus();
   }
   //Communication Related Variable
   AgCommunicating!: number;
@@ -273,13 +277,13 @@ export class DashbordComponent {
           },
           title: {
             text: 'AG (' + response.AgCommunicating + "/" + response.AgTotal + ")",
-            align:'center',
+            align: 'center',
             style: {
               font: 'blod',
               color: '#333333', // Title color
               fontWeight: 'bold',
               fontSize: '12px',
-              fontFamily:'Trebuchet MS',
+              fontFamily: 'Trebuchet MS',
             }
           },
 
@@ -384,7 +388,7 @@ export class DashbordComponent {
             enabled: false // Disables the Highcharts branding
           }
         });
-       
+
         Highcharts.chart('total-comm', {
           chart: {
             type: 'pie',
@@ -449,7 +453,53 @@ export class DashbordComponent {
       }
     );
   }
-
+  //Last seven days bar
+  getLastSevenDaysCommunicationStatus() {
+  this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
+    (response) => {
+      this.lastSevenDaysMap=response;
+      this.lastSevenDaysMap.forEach((value,key)=>{
+        console.log("Value :"+value+"  Key :"+key)
+      },);
+      const key = Object.keys(response);
+      const value = Object.values(response);
+console.log("Keys :"+key)
+      Highcharts.chart('lastSevendaysCommunication', {
+        chart: {
+          type: 'bar',
+          animation: false,
+          height: 350,
+          width: 500,  // increased for better display
+          backgroundColor: '#ffffff',
+          spacing: [0, 20, 40, 0],
+          margin: [0, 35, 230, 20],
+        },
+        title: {
+          text: '7 Days Status',
+        },
+        xAxis: {
+          categories: key,
+          title: { text: 'Date' },
+        },
+        yAxis: {
+          title: {
+            text: 'Value',
+          },
+        },
+        series: [
+          {
+            name: 'Status',
+            type: 'bar',
+            data: value.map((v: any) => Number(v)), // ensure numeric values
+          },
+        ],
+      });
+    },
+    (error) => {
+      console.error('Error fetching data:', error);
+    }
+  );
+}
 
 
 }

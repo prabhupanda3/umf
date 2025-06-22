@@ -45,8 +45,8 @@ export class NavbarComponent {
           const moduleNameSpan = this.renderer.createElement('span');
           this.renderer.setProperty(moduleNameSpan, 'innerHTML', module.moduleName);
           this.renderer.setStyle(moduleNameSpan, 'font-weight', 'bold');
-          this.renderer.setStyle(moduleNameSpan, 'color', '#2cb1f8');
-          this.renderer.setStyle(moduleNameSpan, 'padding-left', '8px');
+          this.renderer.setStyle(moduleNameSpan, 'color', '#ffffff');
+          this.renderer.setStyle(moduleNameSpan, 'padding-left', '80px');
           this.renderer.setStyle(moduleNameSpan, 'font-size', '16px');
           this.renderer.appendChild(newDiv, moduleNameSpan);
 
@@ -70,7 +70,7 @@ export class NavbarComponent {
             }
 
             // Submodule style
-            this.renderer.setStyle(subDiv, 'backgroundColor', '#cecbcb');
+            this.renderer.setStyle(subDiv, 'backgroundColor', '#ffffff');
             this.renderer.setStyle(subDiv, 'margin', '4px 0');
             this.renderer.setStyle(subDiv, 'padding', '6px 8px');
             this.renderer.setStyle(subDiv, 'border-radius', '6px');
@@ -78,13 +78,13 @@ export class NavbarComponent {
 
             // Hover effect
             this.renderer.listen(subDiv, 'mouseenter', () => {
-              this.renderer.setStyle(subDiv, 'backgroundColor', '#b9b8b8');
+              this.renderer.setStyle(subDiv, 'backgroundColor', '#ffffff');
             });
             this.renderer.listen(subDiv, 'mouseleave', () => {
-              this.renderer.setStyle(subDiv, 'backgroundColor', '#d8dcd8');
+              this.renderer.setStyle(subDiv, 'backgroundColor', '#ffffff');
             });
 
-            this.renderer.setStyle(submoduleNameAnchor, 'color', '#8008f0');
+            this.renderer.setStyle(submoduleNameAnchor, 'color', '#000000');
             this.renderer.setStyle(submoduleNameAnchor, 'text-decoration', 'none');
             this.renderer.setStyle(submoduleNameAnchor, 'font-size', '16px');
 
@@ -94,7 +94,7 @@ export class NavbarComponent {
 
           // Module container styles
           //this.renderer.setStyle(newDiv, 'backgroundColor', '#7f0ceb');
-          this.renderer.setStyle(newDiv, 'backgroundImage', 'linear-gradient(to right,#e85e09,#ea7f5b,#3020de)');
+          this.renderer.setStyle(newDiv, 'backgroundImage', 'linear-gradient(to right,#0d3c65, #3b83c0)');
 
           this.renderer.setStyle(newDiv, 'padding', '12px');
           this.renderer.setStyle(newDiv, 'border-radius', '12px');

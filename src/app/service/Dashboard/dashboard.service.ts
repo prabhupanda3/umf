@@ -15,4 +15,8 @@ export class DashboardService {
   getDayCommunicationSummary(hload:{username:string | null,hierarchyId:number ,hirarchyLevel: number }){
     return this.httpClient.post<any>(`${this.baseurl}devicesummary/daylivecommunication`,hload);
   }
+  getSevenDaysCommunication(hload:{username:string | null,hierarchyId:number ,hirarchyLevel: number,hierarchyName:string | null}):Observable<Map<string,number>>{
+
+  return   this.httpClient.post<any>(`${this.baseurl}devicesummary/lastSevenDaysComm`,hload);
+  }
 }
