@@ -71,24 +71,22 @@
 }
 
 #communicationStatus {
-  background-color: #ffffff;
-  height: 170px;
-  margin-top: 0.5%;
+  background-color: #6b95ea;
+  height: 200px;
+  border: solid;
+  border-color: thistle;
 }
 
 #cs-container {
-  height: 35%;
-background-color: #ffffff;
+  width: 100%;
+  height: 350px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;    /* hide overflow if any */
+  box-sizing: border-box; /* include padding/border in size */
 }
 
-#nonagcomm {
-  height: 35%;
-}
 
-#total-comm {
-  height: 35%;
-
-}
 #HighVoltage{
   height: 35%;
 

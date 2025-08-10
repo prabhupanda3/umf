@@ -11,20 +11,19 @@ import { DashboardService } from 'src/app/service/Dashboard/dashboard.service';
 })
 export class DashbordComponent {
 
-
+  today: Date = new Date();
   hierarchyKeys!: number[];
   username!: string | null;
   levels: string[] = ['Region', 'Circle', 'Division', 'Zone', 'Substation'];
   hirarchyArray!: { key: number; value: string; }[];
   keyHolder!: Map<string, any>;
   hid!: number;
-  leveId!: number;
+  leveId!: string;
   lid!: number;
   selectedValue!: string | null;
   selectedLevelId!: string | null;
-  selectedDate: string = '';
   hierarchyName: string = '';
-lastSevenDaysMap!:Map<String,number>;
+  lastSevenDaysMap!: Map<String, string[]>;
 
   constructor(private dashboardService: DashboardService,
     private renderer: Renderer2, private el: ElementRef) { }
@@ -33,12 +32,13 @@ lastSevenDaysMap!:Map<String,number>;
     this.getReport();
   }
   hierarchyHolder!: Map<string, Map<number, string>>;
-  hload: { username: string | null, hierarchyId: number, hirarchyLevel: number, date: string, hierarchyName: string | null } = {
+  hload: { username: string | null, hierarchyId: number, hirarchyLevel: string, date: string, hierarchyName: string | null } = {
     username: sessionStorage.getItem('username'),
     hierarchyId: this.hid,
     hirarchyLevel: this.leveId,
-    date: this.selectedDate,
-    hierarchyName: this.hierarchyName
+    date: new Date().toISOString().split('T')[0],
+    hierarchyName: this.hierarchyName,
+
   };
 
   chatRout(): void {
@@ -119,7 +119,7 @@ lastSevenDaysMap!:Map<String,number>;
             this.selectedValue = (event.target as HTMLSelectElement).value;
             this.hload.hierarchyId = Number(this.selectedValue);
             this.selectedLevelId = (event.target as HTMLSelectElement).id;
-            this.hload.hirarchyLevel = Number(this.selectedLevelId);
+            this.hload.hirarchyLevel = this.selectedLevelId;
             const selectEl = event.target as HTMLSelectElement;
             this.hload.hierarchyName = selectEl.options[selectEl.selectedIndex].text;
             console.log(this.hload.hierarchyId + "======" + this.hload.hirarchyLevel + "  ===== " + this.hload.hierarchyName);
@@ -135,7 +135,7 @@ lastSevenDaysMap!:Map<String,number>;
                 this.hierarchyHolder.forEach((key, value) => {
                   if (value === `${this.levels[this.lid]}`) {
                     while (nextSelect.firstChild) {
-                      nextSelect.removeChild(nextSelect.firstChild);
+                     nextSelect.removeChild(nextSelect.firstChild);
                     }
 
                     this.keyHolder = new Map(Object.entries(key));
@@ -238,8 +238,11 @@ lastSevenDaysMap!:Map<String,number>;
         this.renderer.appendChild(calenderDiv, label);
         this.renderer.appendChild(calenderDiv, inputWrapper);
         this.renderer.appendChild(div, calenderDiv);
-
-
+        //Assign date
+        // Listen for date selection
+        this.renderer.listen(calender, 'change', (event) => {
+          this.hload.date = (event.target as HTMLInputElement).value;
+        });
       },
       (error: string) => {
         console.log("DATA  :" + error)
@@ -260,246 +263,190 @@ lastSevenDaysMap!:Map<String,number>;
   kvtotal33!: number;
   GrandToalCommunicating!: number;
   GrandTotal!: number;
-
-
   public getDayLiveCommunicationSummary() {
-    this.dashboardService.getDayCommunicationSummary(this.hload).subscribe(
-      (response) => {
-        Highcharts.chart('cs-container', {
-          chart: {
-            type: 'pie',
-            animation: false,
-            height: 350,
-            width: 175,
-            backgroundColor: '#ffffff',
-            spacing: [0, 20, 40, 0],  // 40px at the top, 20px on the sides and bottom
-            margin: [0, 35, 230, 20]
-          },
-          title: {
-            text: 'AG (' + response.AgCommunicating + "/" + response.AgTotal + ")",
-            align: 'center',
-            style: {
-              font: 'blod',
-              color: '#333333', // Title color
-              fontWeight: 'bold',
-              fontSize: '12px',
-              fontFamily: 'Trebuchet MS',
-            }
-          },
-
-          plotOptions: {
-            pie: {
-              innerSize: '80%', // Makes it a donut chart
-              size: '125%',
-              allowPointSelect: false,
-              startAngle: 180,
-              dataLabels: {
-                enabled: false,
-              },
-              states: {
-                hover: {
-                  enabled: true // Disable hover effect
-                }
-              }
-
-            },
-
-          },
-          pane: {
-
-          },
-          tooltip: {
-            enabled: false,
-            shadow: false, // Removes the tooltip shadow (and arrow)
-            borderRadius: 0 // Removes the rounded borders, which could create an arrow effect
-          },
-          series: [
-            {
-              type: 'pie',
-
-              data: [
-                { y: response.AgCommunicating, color: '#fd520e9d' },
-                { y: response.AgTotal - response.AgCommunicating, color: '#cccbcb' }
-              ]
-            }
-          ],
-          credits: {
-            enabled: false // Disables the Highcharts branding
-          }
-
-        }
-        );
-
-        Highcharts.chart('nonagcomm', {
-          chart: {
-            type: 'pie',
-            animation: false,
-            height: 350,
-            width: 200,
-            backgroundColor: '#ffffff',
-
-            spacing: [0, 20, 40, 0],  // 40px at the top, 20px on the sides and bottom
-            margin: [0, 35, 230, 20]
-          },
-          title: {
-            text: 'NON-AG (' + (response.NonAgCommunicating + response.kvComm33) + "/" + (response.kvtotal33 + response.NonAgTotal) + ")",
-            style: {
-              font: 'blod',
-              color: '#333333', // Title color
-              fontWeight: 'bold',
-              fontSize: '12px'
-            }
-          },
-
-          plotOptions: {
-            pie: {
-              innerSize: '80%', // Makes it a donut chart
-              size: '125%',
-              allowPointSelect: false,
-              startAngle: 180,
-              dataLabels: {
-                enabled: false,
-              },
-              states: {
-                hover: {
-                  enabled: true // Disable hover effect
-                }
-              }
-
-            },
-
-          },
-          tooltip: {
-            enabled: false,
-            shadow: false, // Removes the tooltip shadow (and arrow)
-            borderRadius: 0 // Removes the rounded borders, which could create an arrow effect
-          },
-          series: [
-            {
-              type: 'pie',
-
-              data: [
-                { y: response.AgCommunicating },
-                { y: response.AgTotal - response.AgCommunicating, color: '#cccbcb' }
-              ]
-            }
-          ],
-          credits: {
-            enabled: false // Disables the Highcharts branding
-          }
-        });
-
-        Highcharts.chart('total-comm', {
-          chart: {
-            type: 'pie',
-            animation: false,
-            height: 350,
-            width: 200,
-            backgroundColor: '#ffffff',
-            spacing: [0, 20, 40, 0],  // 40px at the top, 20px on the sides and bottom
-            margin: [0, 35, 230, 20]
-          },
-          title: {
-            text: 'Total (' + response.GrandToalCommunicating + "/" + response.GrandTotal + ")",
-            style: {
-              font: 'blod',
-
-              color: '#333333', // Title color
-              fontWeight: 'bold',
-              fontSize: '12px'
-            }
-          },
-
-          plotOptions: {
-            pie: {
-              innerSize: '80%', // Makes it a donut chart
-              size: '125%',
-              allowPointSelect: false,
-              startAngle: 180,
-              dataLabels: {
-                enabled: false,
-              },
-              states: {
-                hover: {
-                  enabled: true // Disable hover effect
-                }
-              }
-
-            },
-
-          },
-          tooltip: {
-            enabled: false,
-            shadow: false, // Removes the tooltip shadow (and arrow)
-            borderRadius: 0 // Removes the rounded borders, which could create an arrow effect
-          },
-          series: [
-            {
-              type: 'pie',
-              name: 'Communication-Livestatus',
-              data: [
-                { y: response.GrandToalCommunicating },
-                { y: response.GrandTotal, color: '#cccbcb' }
-              ]
-            }
-          ],
-          credits: {
-            enabled: false // Disables the Highcharts branding
-          }
-        })
-      },
-      (error) => {
-
-      }
-    );
-  }
-  //Last seven days bar
-  getLastSevenDaysCommunicationStatus() {
-  this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
-    (response) => {
-      this.lastSevenDaysMap=response;
-      this.lastSevenDaysMap.forEach((value,key)=>{
-        console.log("Value :"+value+"  Key :"+key)
-      },);
-      const key = Object.keys(response);
-      const value = Object.values(response);
-console.log("Keys :"+key)
-      Highcharts.chart('lastSevendaysCommunication', {
+    this.dashboardService.getDayCommunicationSummary(this.hload).subscribe((response) => {
+      const options: Highcharts.Options = {
         chart: {
-          type: 'bar',
-          animation: false,
-          height: 350,
-          width: 500,  // increased for better display
+          renderTo: 'cs-container',
+          type: 'pie',
           backgroundColor: '#ffffff',
-          spacing: [0, 20, 40, 0],
-          margin: [0, 35, 230, 20],
+          height: 200,
+          animation: false,
+          events: {
+            load: function () {
+              const chart = this as Highcharts.Chart;
+
+              // --- Top Labels ---
+              chart.renderer.text(`AG (${response.AgCommunicating}/${response.AgTotal})`,
+                chart.plotLeft + chart.chartWidth * 0.17, chart.plotTop)
+                .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
+                .attr({ zIndex: 5 })
+                .add();
+
+              chart.renderer.text(`NON-AG (${response.NonAgCommunicating}/${response.NonAgTotal})`,
+                chart.plotLeft + chart.chartWidth * 0.3, chart.plotTop)
+                .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
+                .attr({ zIndex: 5 })
+                .add();
+
+              chart.renderer.text(`33KV (${response.kvComm33}/${response.kvtotal33})`,
+                chart.plotLeft + chart.chartWidth * 0.5, chart.plotTop)
+                .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
+                .attr({ zIndex: 5 })
+                .add();
+
+              chart.renderer.text(`Total (${response.GrandToalCommunicating}/${response.GrandTotal})`,
+                chart.plotLeft + chart.chartWidth * 0.7, chart.plotTop)
+                .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
+                .attr({ zIndex: 5 })
+                .add();
+
+              // --- Center Percentages ---
+              chart.series.forEach((series) => {
+                if (series.type === 'pie') {
+                  const center = series.center as [number, number, number, number];
+                  const cx = chart.plotLeft + center[0];
+                  const cy = chart.plotTop + center[1];
+
+                  let total = series.data.reduce((sum, p) => sum + (p.y || 0), 0);
+                  let firstValue = series.data[0]?.y || 0;
+                  let percent = total > 0 ? ((firstValue / total) * 100).toFixed(1) + '%' : '0%';
+
+                  chart.renderer.text(percent, cx, cy + 5)
+                    .css({ color: '#000', fontSize: '10px', fontWeight: 'bold', textAlign: 'center' })
+                    .attr({ zIndex: 5, 'text-anchor': 'middle' })
+                    .add();
+                }
+              });
+            }
+          }
         },
         title: {
-          text: '7 Days Status',
+          text: 'Live Communication',
+          align: 'center',
+          margin: 20,
+          style: {
+            color: '#4a88c7ff',
+            fontSize: '18px',
+            fontWeight: 'bold',
+            fontFamily: 'Arial, sans-serif'
+          }
         },
-        xAxis: {
-          categories: key,
-          title: { text: 'Date' },
-        },
-        yAxis: {
-          title: {
-            text: 'Value',
-          },
+        tooltip: { enabled: true },
+        plotOptions: {
+          pie: {
+            innerSize: '90%',
+            size: '50%',
+            startAngle: 270,
+            allowPointSelect: false,
+            dataLabels: { enabled: false },
+            borderWidth: 0 // removes the tiny gap line
+          }
         },
         series: [
           {
-            name: 'Status',
-            type: 'bar',
-            data: value.map((v: any) => Number(v)), // ensure numeric values
+            type: 'pie',
+            name: 'AG',
+            center: ['20%', '50%'],
+            size: 90,
+            data: [
+              { y: response.AgCommunicating, color: '#52A3F2' },
+              { y: response.AgTotal - response.AgCommunicating, color: '#cccbcb' }
+            ]
           },
+          {
+            type: 'pie',
+            name: 'NON-AG',
+            center: ['40%', '50%'],
+            size: 90,
+            data: [
+              { y: response.NonAgCommunicating, color: '#72E8DA' },
+              { y: response.NonAgTotal - response.NonAgCommunicating, color: '#cccbcb' }
+            ]
+          },
+          {
+            type: 'pie',
+            name: '33KV',
+            center: ['60%', '50%'],
+            size: 90,
+            data: [
+              { y: response.kvComm33, color: '#72E8DA' },
+              { y: response.kvtotal33 - response.kvComm33, color: '#cccbcb' }
+            ]
+          },
+          {
+            type: 'pie',
+            name: 'Total',
+            center: ['80%', '50%'],
+            size: 90,
+            data: [
+              { y: response.GrandToalCommunicating, color: '#fd520e9d' },
+              { y: response.GrandTotal - response.GrandToalCommunicating, color: '#cccbcb' }
+            ]
+          }
         ],
-      });
-    },
-    (error) => {
-      console.error('Error fetching data:', error);
-    }
-  );
-}
+        credits: { enabled: false }
+      };
+
+      Highcharts.chart(options);
+    });
+  }
+
+
+  //Last seven days bar
+  getLastSevenDaysCommunicationStatus() {
+    this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
+      (response) => {
+        this.lastSevenDaysMap = response;
+        console.log("Total count"+this.lastSevenDaysMap.get('TotalCount'));
+        const key = Object.keys(response);
+        const value = Object.values(response);
+        console.log("Keys :" + key)
+        Highcharts.chart('lastSevendaysCommunication', {
+          chart: {
+            type: 'bar',
+            animation: false,
+            height: 200,
+            backgroundColor: '#ffffff',
+            spacing: [0, 20, 40, 0],
+            margin: [0, 35, 230, 20],
+          },
+          title: {
+            text: '7 Days Status',
+            align: 'center',
+            margin: 20,
+            style: {
+              color: '#4a88c7ff',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              fontFamily: 'Arial, sans-serif'
+            }
+          },
+          xAxis: {
+            categories: key,
+             title: { text: 'Date' },
+          },
+          yAxis: {
+            title: {
+            text: 'Value',
+          },
+          },
+          series: [
+            {
+              name: 'Status',
+              type: 'bar',
+              data: value.map((v: any) => Number(v)), // ensure numeric values
+            },
+          ],
+          credits: { enabled: false }
+
+        });
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
+  }
 
 
 }
