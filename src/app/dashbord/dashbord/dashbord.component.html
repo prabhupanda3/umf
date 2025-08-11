@@ -8,13 +8,39 @@
         </div>
       </div>
       <div class="panel-body">
-        <div id="hierarchySelector">
+        <div id="hierarchySelector" class="container-fluid  mb-3">
+          <div class="d-flex flex-wrap-nowrap align-items-end gap-2 overflow-auto">
+            <!-- Hierarchy Dropdowns -->
+            <div *ngFor="let level of levels; let i = index; trackBy: trackByLevel" style="min-width: 190px;">
+              <label class="form-label">{{ level }}</label>
+              <select class="form-select" [(ngModel)]="selectedValues[i]"
+                (change)="onLevelChange(i, selectedValues[i])">
+                <option value="">--all--</option>
+                <option *ngFor="let opt of getOptionsForLevel(level)" [value]="opt.id">
+                  {{ opt.name }}
+                </option>
+              </select>
+            </div>
+
+
+            <!-- Date Selector -->
+            <div style="min-width: 180px;">
+              <label class="form-label">Select Date</label>
+              <input type="date" class="form-control" [(ngModel)]="reportDate" />
+            </div>
+
+            <!-- Button -->
+            <div style="min-width: 80px;">
+              <button type="button" class="btn btn-primary w-100" (click)="getReport()">Get</button>
+            </div>
+
+          </div>
         </div>
-        <div class="container-fluid	">
+        <div id="communicationSummary" class="container-fluid	">
           <div class="row">
             <div class="col-md-auto d-flex flex-column bg-light" id="communicationStatus">
-                <div id="cs-container" class="flex-fill">
-                </div>
+              <div id="cs-container" class="flex-fill">
+              </div>
             </div>
             <div class="col">
               <div id="lastSevendaysCommunication">

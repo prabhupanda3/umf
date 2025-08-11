@@ -28,10 +28,10 @@ export class DashbordComponent {
   constructor(private dashboardService: DashboardService,
     private renderer: Renderer2, private el: ElementRef) { }
   ngOnInit() {
-    this.getAvailableUserHirarchy();
+    //this.getAvailableUserHirarchy();
     this.getReport();
+    this.getHierarchyDetails();
   }
-  hierarchyHolder!: Map<string, Map<number, string>>;
   hload: { username: string | null, hierarchyId: number, hirarchyLevel: string, date: string, hierarchyName: string | null } = {
     username: sessionStorage.getItem('username'),
     hierarchyId: this.hid,
@@ -40,215 +40,62 @@ export class DashbordComponent {
     hierarchyName: this.hierarchyName,
 
   };
-
-  chatRout(): void {
-    try {
-      window.location.href = '/chat';
-    }
-    catch (error) {
-      console.error('Error log', error);
-    }
-  }
-
-  //Hierarchy Selection
-  public getAvailableUserHirarchy() {
+  //Hierarchy Data
+  hierarchyHolder = new Map<string, Map<number, string>>();
+  selectedValues: { [key: number]: string } = {};
+  reportDate: string = '';
+  getHierarchyDetails() {
     this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
-      (data: Map<string, Map<number, string>>) => {
-        this.hierarchyHolder = new Map(Object.entries(data));
-
-        const div = this.el.nativeElement.querySelector('#hierarchySelector');
-
-        // Apply styles to parent container
-        this.renderer.setStyle(div, 'display', 'flex');
-        this.renderer.setStyle(div, 'flex-wrap', 'wrap');
-        this.renderer.setStyle(div, 'gap', '20px');
-        this.renderer.setStyle(div, 'padding', '15px');
-        this.renderer.setStyle(div, 'background', '#fff');
-        this.renderer.setStyle(div, 'border-radius', '10px');
-        this.renderer.setStyle(div, 'box-shadow', '0 4px 8px rgba(0, 0, 0, 0.05)');
-
-        this.levels.forEach((level, index) => {
-          const label = this.renderer.createElement('label');
-          const labelText = this.renderer.createText(level);
-          this.renderer.appendChild(label, labelText);
-
-          // Style label
-          this.renderer.setStyle(label, 'display', 'block');
-          this.renderer.setStyle(label, 'margin-bottom', '6px');
-          this.renderer.setStyle(label, 'font-size', '14px');
-          this.renderer.setStyle(label, 'font-weight', '600');
-          this.renderer.setStyle(label, 'color', '#333');
-
-          let select = this.renderer.createElement('select');
-          this.renderer.setAttribute(select, 'id', `${index}`);
-
-          // Default "--all--" option
-          const defaultOption = this.renderer.createElement('option');
-          this.renderer.setProperty(defaultOption, 'value', '--all--');
-          this.renderer.setProperty(defaultOption, 'text', '--all--');
-          this.renderer.appendChild(select, defaultOption);
-
-          // Fill select options
-          this.hierarchyHolder.forEach((key, value) => {
-            if (`${value}` === level) {
-              this.keyHolder = new Map(Object.entries(key));
-              this.keyHolder.forEach((id, name) => {
-                const option = this.renderer.createElement('option');
-                this.renderer.setProperty(option, 'value', name);
-                const optionText = this.renderer.createText(id);
-                this.renderer.appendChild(option, optionText);
-                this.renderer.appendChild(select, option);
-              });
-            }
-          });
-
-          // Style select dropdown
-          this.renderer.setStyle(select, 'border-radius', '8px');
-          this.renderer.setStyle(select, 'padding', '8px 12px');
-          this.renderer.setStyle(select, 'height', '40px');
-          this.renderer.setStyle(select, 'width', '220px');
-          this.renderer.setStyle(select, 'border', '1px solid #a0a7e5');
-          this.renderer.setStyle(select, 'background-color', '#f9f9ff');
-          this.renderer.setStyle(select, 'font-size', '14px');
-          this.renderer.setStyle(select, 'outline', 'none');
-          this.renderer.setStyle(select, 'box-shadow', '0 2px 4px rgba(0, 0, 0, 0.05)');
-          this.renderer.setStyle(select, 'transition', 'border-color 0.2s ease-in-out');
-
-          // On change event
-          this.renderer.listen(select, 'change', (event) => {
-            this.selectedValue = (event.target as HTMLSelectElement).value;
-            this.hload.hierarchyId = Number(this.selectedValue);
-            this.selectedLevelId = (event.target as HTMLSelectElement).id;
-            this.hload.hirarchyLevel = this.selectedLevelId;
-            const selectEl = event.target as HTMLSelectElement;
-            this.hload.hierarchyName = selectEl.options[selectEl.selectedIndex].text;
-            console.log(this.hload.hierarchyId + "======" + this.hload.hirarchyLevel + "  ===== " + this.hload.hierarchyName);
-
-            this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
-              (recivedData: Map<string, Map<number, string>>) => {
-                console.log(this.hload.hierarchyId + "==========" + this.hload.hirarchyLevel);
-
-                this.hierarchyHolder = new Map(Object.entries(recivedData));
-                const nextSelect = document.getElementById(`${this.hload.hirarchyLevel + 1}`) as HTMLSelectElement;
-                this.lid = Number(this.selectedLevelId) + 1;
-
-                this.hierarchyHolder.forEach((key, value) => {
-                  if (value === `${this.levels[this.lid]}`) {
-                    while (nextSelect.firstChild) {
-                     nextSelect.removeChild(nextSelect.firstChild);
-                    }
-
-                    this.keyHolder = new Map(Object.entries(key));
-                    this.keyHolder.forEach((name, id) => {
-                      const option = this.renderer.createElement('option');
-                      this.renderer.setProperty(option, 'value', id);
-                      const optionText = this.renderer.createText(name);
-                      this.renderer.appendChild(option, optionText);
-                      this.renderer.appendChild(nextSelect, option);
-                    });
-                  }
-                });
-
-                select = nextSelect;
-              });
-          });
-
-          // Append to the hierarchy container
-          const wrapper = this.renderer.createElement('div');
-          this.renderer.setStyle(wrapper, 'display', 'flex');
-          this.renderer.setStyle(wrapper, 'flex-direction', 'column');
-
-          this.renderer.appendChild(wrapper, label);
-          this.renderer.appendChild(wrapper, select);
-          this.renderer.appendChild(div, wrapper);
-        });
-
-        const calenderDiv = this.renderer.createElement('div');
-        this.renderer.setStyle(calenderDiv, 'display', 'flex');
-        this.renderer.setStyle(calenderDiv, 'flex-direction', 'column');
-
-        // Create label
-        const label = this.renderer.createElement('label');
-        const labelText = this.renderer.createText('Select Date');
-        this.renderer.appendChild(label, labelText);
-
-        // Style label
-        this.renderer.setStyle(label, 'display', 'block');
-        this.renderer.setStyle(label, 'margin-bottom', '6px');
-        this.renderer.setStyle(label, 'font-size', '14px');
-        this.renderer.setStyle(label, 'font-weight', '600');
-        this.renderer.setStyle(label, 'color', '#333');
-
-        // Input wrapper (row layout)
-        const inputWrapper = this.renderer.createElement('div');
-        this.renderer.setStyle(inputWrapper, 'display', 'flex');
-        this.renderer.setStyle(inputWrapper, 'flex-direction', 'row');
-        this.renderer.setStyle(inputWrapper, 'align-items', 'center');
-        this.renderer.setStyle(inputWrapper, 'gap', '10px'); // spacing between calendar and button
-
-        // Create calendar input
-        const calender = this.renderer.createElement('input');
-        this.renderer.setAttribute(calender, 'type', 'date');
-        this.renderer.setStyle(calender, 'border-radius', '8px');
-        this.renderer.setStyle(calender, 'padding', '8px 12px');
-        this.renderer.setStyle(calender, 'height', '40px');
-        this.renderer.setStyle(calender, 'width', '220px');
-        this.renderer.setStyle(calender, 'border', '1px solid #a0a7e5');
-        this.renderer.setStyle(calender, 'background-color', '#f9f9ff');
-        this.renderer.setStyle(calender, 'font-size', '14px');
-        this.renderer.setStyle(calender, 'outline', 'none');
-        this.renderer.setStyle(calender, 'box-shadow', '0 2px 4px rgba(0, 0, 0, 0.05)');
-        this.renderer.setStyle(calender, 'transition', 'border-color 0.2s ease-in-out');
-
-        // Create button
-        const button = this.renderer.createElement('button');
-        const buttonText = this.renderer.createText('Get');
-        this.renderer.appendChild(button, buttonText);
-        this.renderer.setAttribute(button, 'type', 'button');
-        this.renderer.setStyle(button, 'padding', '8px 14px');
-        this.renderer.setStyle(button, 'border', 'none');
-        this.renderer.setStyle(button, 'border-radius', '6px');
-        this.renderer.setStyle(button, 'background-color', '#4f46e5');
-        this.renderer.setStyle(button, 'color', '#fff');
-        this.renderer.setStyle(button, 'font-size', '13px');
-        this.renderer.setStyle(button, 'font-weight', '600');
-        this.renderer.setStyle(button, 'cursor', 'pointer');
-        this.renderer.setStyle(button, 'box-shadow', '0 2px 4px rgba(0, 0, 0, 0.1)');
-        this.renderer.setStyle(button, 'transition', 'background-color 0.2s ease-in-out');
-
-        // Hover effect
-        this.renderer.listen(button, 'mouseenter', () => {
-          this.renderer.setStyle(button, 'background-color', '#4338ca');
-        });
-        this.renderer.listen(button, 'mouseleave', () => {
-          this.renderer.setStyle(button, 'background-color', '#4f46e5');
-        });
-
-        // Click handler
-        this.renderer.listen(button, 'click', () => {
-          console.log('Button clicked');
-          //Call get Report
-          this.getReport();
-        });
-
-        // Append elements
-        this.renderer.appendChild(inputWrapper, calender);
-        this.renderer.appendChild(inputWrapper, button);
-
-        this.renderer.appendChild(calenderDiv, label);
-        this.renderer.appendChild(calenderDiv, inputWrapper);
-        this.renderer.appendChild(div, calenderDiv);
-        //Assign date
-        // Listen for date selection
-        this.renderer.listen(calender, 'change', (event) => {
-          this.hload.date = (event.target as HTMLInputElement).value;
-        });
+      (response: Map<string, Map<number, string>>) => {
+        this.hierarchyHolder = new Map(Object.entries(response));
       },
-      (error: string) => {
-        console.log("DATA  :" + error)
+      (error) => {
       }
     );
   }
+  getOptionsForLevel(levelName: string): { id: number, name: string }[] {
+    const options: { id: number, name: string }[] = [];
+    this.hierarchyHolder.forEach((innerMap, outerKey) => {
+      if (outerKey === levelName) {
+        new Map(Object.entries(innerMap)).forEach((name, idStr) => {
+          options.push({ id: Number(idStr), name });
+        });
+      }
+    });
+    return options;
+  }
+onLevelChange(levelIndex: number, selectedId: string) {
+  // Keep the selected value
+  this.selectedValues[levelIndex] = selectedId;
+
+  // Update the payload for backend
+  this.hload.hierarchyId = Number(selectedId);
+  this.hload.hirarchyLevel = levelIndex.toString();
+
+  this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
+    (data: Map<string, Map<number, string>>) => {
+      const newData = new Map(Object.entries(data));
+
+      // Merge: keep previous levels, update only next level
+      newData.forEach((value, key) => {
+        if (!this.hierarchyHolder.has(key) || this.levels.indexOf(key) > levelIndex) {
+          this.hierarchyHolder.set(key, value);
+        }
+      });
+
+      // Remove deeper levels beyond the one we just updated
+      for (let i = levelIndex + 2; i < this.levels.length; i++) {
+        const levelName = this.levels[i];
+        this.hierarchyHolder.delete(levelName);
+        delete this.selectedValues[i];
+      }
+    },
+    (error) => console.error(error)
+  );
+}
+trackByLevel(index: number, item: string) {
+  return item; // unique per level
+}
 
   public getReport() {
     this.getDayLiveCommunicationSummary();
@@ -397,8 +244,8 @@ export class DashbordComponent {
   getLastSevenDaysCommunicationStatus() {
     this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
       (response) => {
-        this.lastSevenDaysMap = response;
-        console.log("Total count"+this.lastSevenDaysMap.get('TotalCount'));
+        //this.lastSevenDaysMap = response;
+        // console.log("Total count" + this.lastSevenDaysMap.get('TotalCount'));
         const key = Object.keys(response);
         const value = Object.values(response);
         console.log("Keys :" + key)
@@ -424,12 +271,12 @@ export class DashbordComponent {
           },
           xAxis: {
             categories: key,
-             title: { text: 'Date' },
+            title: { text: 'Date' },
           },
           yAxis: {
             title: {
-            text: 'Value',
-          },
+              text: 'Value',
+            },
           },
           series: [
             {
