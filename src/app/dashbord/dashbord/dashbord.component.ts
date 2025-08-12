@@ -29,8 +29,9 @@ export class DashbordComponent {
     private renderer: Renderer2, private el: ElementRef) { }
   ngOnInit() {
     //this.getAvailableUserHirarchy();
-    this.getReport();
+    this.getDefaultDate();
     this.getHierarchyDetails();
+     this.getReport();
   }
   hload: { username: string | null, hierarchyId: number, hirarchyLevel: string, date: string, hierarchyName: string | null } = {
     username: sessionStorage.getItem('username'),
@@ -64,40 +65,41 @@ export class DashbordComponent {
     });
     return options;
   }
-onLevelChange(levelIndex: number, selectedId: string) {
-  // Keep the selected value
-  this.selectedValues[levelIndex] = selectedId;
+  onLevelChange(levelIndex: number, selectedId: string) {
+    // Keep the selected value
+    this.selectedValues[levelIndex] = selectedId;
 
-  // Update the payload for backend
-  this.hload.hierarchyId = Number(selectedId);
-  this.hload.hirarchyLevel = levelIndex.toString();
+    // Update the payload for backend
+    this.hload.hierarchyId = Number(selectedId);
+    this.hload.hirarchyLevel = levelIndex.toString();
 
-  this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
-    (data: Map<string, Map<number, string>>) => {
-      const newData = new Map(Object.entries(data));
+    this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
+      (data: Map<string, Map<number, string>>) => {
+        const newData = new Map(Object.entries(data));
 
-      // Merge: keep previous levels, update only next level
-      newData.forEach((value, key) => {
-        if (!this.hierarchyHolder.has(key) || this.levels.indexOf(key) > levelIndex) {
-          this.hierarchyHolder.set(key, value);
+        // Merge: keep previous levels, update only next level
+        newData.forEach((value, key) => {
+          if (!this.hierarchyHolder.has(key) || this.levels.indexOf(key) > levelIndex) {
+            this.hierarchyHolder.set(key, value);
+          }
+        });
+
+        // Remove deeper levels beyond the one we just updated
+        for (let i = levelIndex + 2; i < this.levels.length; i++) {
+          const levelName = this.levels[i];
+          this.hierarchyHolder.delete(levelName);
+          delete this.selectedValues[i];
         }
-      });
-
-      // Remove deeper levels beyond the one we just updated
-      for (let i = levelIndex + 2; i < this.levels.length; i++) {
-        const levelName = this.levels[i];
-        this.hierarchyHolder.delete(levelName);
-        delete this.selectedValues[i];
-      }
-    },
-    (error) => console.error(error)
-  );
-}
-trackByLevel(index: number, item: string) {
-  return item; // unique per level
-}
+      },
+      (error) => console.error(error)
+    );
+  }
+  trackByLevel(index: number, item: string) {
+    return item; // unique per level
+  }
 
   public getReport() {
+    this.hload.date=this.reportDate;
     this.getDayLiveCommunicationSummary();
     this.getLastSevenDaysCommunicationStatus();
   }
@@ -118,14 +120,15 @@ trackByLevel(index: number, item: string) {
           type: 'pie',
           backgroundColor: '#ffffff',
           height: 200,
-          animation: false,
+          animation: true,
+          spacingRight: 40,
           events: {
             load: function () {
               const chart = this as Highcharts.Chart;
 
               // --- Top Labels ---
               chart.renderer.text(`AG (${response.AgCommunicating}/${response.AgTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.17, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.15, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
@@ -137,13 +140,13 @@ trackByLevel(index: number, item: string) {
                 .add();
 
               chart.renderer.text(`33KV (${response.kvComm33}/${response.kvtotal33})`,
-                chart.plotLeft + chart.chartWidth * 0.5, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.47, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
 
               chart.renderer.text(`Total (${response.GrandToalCommunicating}/${response.GrandTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.7, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.63, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
@@ -182,7 +185,7 @@ trackByLevel(index: number, item: string) {
         tooltip: { enabled: true },
         plotOptions: {
           pie: {
-            innerSize: '90%',
+            innerSize: '87%',
             size: '50%',
             startAngle: 270,
             allowPointSelect: false,
@@ -295,5 +298,16 @@ trackByLevel(index: number, item: string) {
     );
   }
 
+getDefaultDate(){
+   const today = new Date();
+  
+  // For <input type="date">
+  this.reportDate = today.toISOString().split('T')[0]; // YYYY-MM-DD
 
+  // For displaying in DD-MM-YYYY
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
+    this.hload.date= `${year}-${month}-${day}`;
+}
 }
