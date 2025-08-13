@@ -1,9 +1,10 @@
-import { PercentPipe } from '@angular/common';
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import { error } from 'jquery';
 import { DashboardService } from 'src/app/service/Dashboard/dashboard.service';
+import HC_3D from 'highcharts/highcharts-3d';
 
+// Initialize 3D module
+HC_3D(Highcharts);
 @Component({
   selector: 'app-dashbord',
   templateUrl: './dashbord.component.html',
@@ -23,7 +24,6 @@ export class DashbordComponent {
   selectedValue!: string | null;
   selectedLevelId!: string | null;
   hierarchyName: string = '';
-  lastSevenDaysMap!: Map<String, string[]>;
 
   constructor(private dashboardService: DashboardService,
     private renderer: Renderer2, private el: ElementRef) { }
@@ -31,7 +31,7 @@ export class DashbordComponent {
     //this.getAvailableUserHirarchy();
     this.getDefaultDate();
     this.getHierarchyDetails();
-     this.getReport();
+    this.getReport();
   }
   hload: { username: string | null, hierarchyId: number, hirarchyLevel: string, date: string, hierarchyName: string | null } = {
     username: sessionStorage.getItem('username'),
@@ -65,13 +65,22 @@ export class DashbordComponent {
     });
     return options;
   }
-  onLevelChange(levelIndex: number, selectedId: string) {
+  onLevelChange(levelIndex: number, selectedId: string, levelName: string) {
     // Keep the selected value
     this.selectedValues[levelIndex] = selectedId;
 
     // Update the payload for backend
     this.hload.hierarchyId = Number(selectedId);
     this.hload.hirarchyLevel = levelIndex.toString();
+    // Find the selected option object
+    const selectedOption = this.getOptionsForLevel(levelName)
+      .find(opt => opt.id.toString() === selectedId);
+
+    // Update the payload for backend
+    this.hload.hierarchyId = Number(selectedId);
+    this.hload.hirarchyLevel = levelIndex.toString();
+    // Get the name too
+    this.hload.hierarchyName = selectedOption ? selectedOption.name : null;
 
     this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
       (data: Map<string, Map<number, string>>) => {
@@ -99,7 +108,7 @@ export class DashbordComponent {
   }
 
   public getReport() {
-    this.hload.date=this.reportDate;
+    this.hload.date = this.reportDate;
     this.getDayLiveCommunicationSummary();
     this.getLastSevenDaysCommunicationStatus();
   }
@@ -243,23 +252,24 @@ export class DashbordComponent {
   }
 
 
-  //Last seven days bar
+  // Last seven days bar
+  lastSevenDaysMap!: Map<string, string[]>;
+
   getLastSevenDaysCommunicationStatus() {
     this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
       (response) => {
-        //this.lastSevenDaysMap = response;
-        // console.log("Total count" + this.lastSevenDaysMap.get('TotalCount'));
-        const key = Object.keys(response);
-        const value = Object.values(response);
-        console.log("Keys :" + key)
-        Highcharts.chart('lastSevendaysCommunication', {
+        this.lastSevenDaysMap = new Map(Object.entries(response));
+        const upperLimit = Number((this.lastSevenDaysMap.get('TotalCount') ?? [0])[0]);
+
+        const options: Highcharts.Options = {
           chart: {
-            type: 'bar',
+            renderTo: 'lastSevendaysCommunication',
+            type: 'column',
             animation: false,
-            height: 200,
-            backgroundColor: '#ffffff',
-            spacing: [0, 20, 40, 0],
-            margin: [0, 35, 230, 20],
+            backgroundColor: '#ffffffff',
+            reflow: true,
+            height: 200,  // Let container CSS control height
+            width: null    // Let container CSS control width
           },
           title: {
             text: '7 Days Status',
@@ -273,24 +283,47 @@ export class DashbordComponent {
             }
           },
           xAxis: {
-            categories: key,
+            categories: this.lastSevenDaysMap.get('Date') ?? [],
             title: { text: 'Date' },
+            labels: { rotation: 0 },
+            startOnTick: true,       // ensures axis starts at first tick
+            min: 0                   // start at first category
           },
           yAxis: {
-            title: {
-              text: 'Value',
-            },
-          },
-          series: [
-            {
-              name: 'Status',
-              type: 'bar',
-              data: value.map((v: any) => Number(v)), // ensure numeric values
-            },
-          ],
-          credits: { enabled: false }
+            min: 0,
+            max: upperLimit,
+            title: { text: 'Communication Count' },
+            gridLineDashStyle: 'Dash',
+              endOnTick: false,      // prevents Highcharts from rounding up
 
-        });
+            labels: {
+              formatter: function () {
+                return this.value.toString();  // show actual number
+              }
+            }
+          },
+          plotOptions: {
+            column: {
+              borderWidth: 0,
+              dataLabels: { enabled: true },
+              pointWidth: 35,       // Fixed width of each column (adjust as needed)
+              pointPadding: 0.001,    // Space between columns in a group
+              groupPadding: 0.01,    // Space between column groups
+              pointPlacement: 0        // center columns on categories
+
+            }
+          },
+          colors: ['#4a88c7', '#ff7f50', '#32cd32', '#ffd700', '#8a2be2', '#ff69b4', '#00ced1'],
+          credits: { enabled: false },
+          series: [{
+            type: 'column',
+            name: 'Count',
+            colorByPoint: true,
+            data: (this.lastSevenDaysMap.get('communicationCount') ?? []).map(val => Number(val))
+          }]
+        };
+
+        Highcharts.chart(options);
       },
       (error) => {
         console.error('Error fetching data:', error);
@@ -298,16 +331,18 @@ export class DashbordComponent {
     );
   }
 
-getDefaultDate(){
-   const today = new Date();
-  
-  // For <input type="date">
-  this.reportDate = today.toISOString().split('T')[0]; // YYYY-MM-DD
 
-  // For displaying in DD-MM-YYYY
-  const day = String(today.getDate()).padStart(2, '0');
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const year = today.getFullYear();
-    this.hload.date= `${year}-${month}-${day}`;
-}
+
+  getDefaultDate() {
+    const today = new Date();
+
+    // For <input type="date">
+    this.reportDate = today.toISOString().split('T')[0]; // YYYY-MM-DD
+
+    // For displaying in DD-MM-YYYY
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    this.hload.date = `${year}-${month}-${day}`;
+  }
 }

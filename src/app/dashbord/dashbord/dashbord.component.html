@@ -14,7 +14,7 @@
             <div *ngFor="let level of levels; let i = index; trackBy: trackByLevel" style="min-width: 190px;">
               <label class="form-label">{{ level }}</label>
               <select class="form-select" [(ngModel)]="selectedValues[i]"
-                (change)="onLevelChange(i, selectedValues[i])">
+                (change)="onLevelChange(i, selectedValues[i],level)">
                 <option value="">--all--</option>
                 <option *ngFor="let opt of getOptionsForLevel(level)" [value]="opt.id">
                   {{ opt.name }}
@@ -39,18 +39,17 @@
         <div id="communicationSummary" class="container-fluid	">
           <div class="row">
             <div class="col-md-auto d-flex flex-column bg-light" id="communicationStatus">
-              <div id="cs-container" class="flex-fill">
+              <div id="cs-container" >
               </div>
             </div>
-            <div class="col">
-              <div id="lastSevendaysCommunication">
-
+            <div class="col-md-auto d-flex flex-column bg-light">
+              <div id="lastSevendaysCommunication" class="flex-fill">
               </div>
             </div>
-            <div class="col">Column 3</div>
-          </div>
-          <div class="row">
-
+            <div class="col-md-auto d-flex flex-column bg-light">
+              <div id="signalStatus" class="flex-fill">
+              </div>
+            </div>
           </div>
         </div>
       </div>
