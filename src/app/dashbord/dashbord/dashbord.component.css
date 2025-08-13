@@ -75,7 +75,13 @@
   background-color: #6b95ea;
   height: 200px;
   border: solid;
-  border-color: thistle;
+  border-color: #f9aff9;
+}
+#weekLast{
+  background-color: #6b95ea;
+  height: 200px;
+  border: solid;
+  border-color: #f9aff9;
 }
 
 #cs-container {
@@ -85,6 +91,7 @@
   margin: 0;
   overflow: hidden;    /* hide overflow if any */
   box-sizing: border-box; /* include padding/border in size */
+
 }
 
 
@@ -94,11 +101,13 @@
 }
 #lastSevendaysCommunication {
   width: 100%;
-  height: 350px;
+  height: 210px;
   padding: 0;
   margin: 0;
   overflow: hidden;    /* hide overflow if any */
   box-sizing: border-box; /* include padding/border in size */
+  
+   
 }
 #signalStatus {
   width: 100%;

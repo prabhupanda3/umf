@@ -129,33 +129,35 @@ export class DashbordComponent {
           type: 'pie',
           backgroundColor: '#ffffff',
           height: 200,
+          width: null,
           animation: true,
-          spacingRight: 40,
+          spacingRight: -5,
+
           events: {
             load: function () {
               const chart = this as Highcharts.Chart;
 
               // --- Top Labels ---
               chart.renderer.text(`AG (${response.AgCommunicating}/${response.AgTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.15, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.07, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
 
               chart.renderer.text(`NON-AG (${response.NonAgCommunicating}/${response.NonAgTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.3, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.21, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
 
               chart.renderer.text(`33KV (${response.kvComm33}/${response.kvtotal33})`,
-                chart.plotLeft + chart.chartWidth * 0.47, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.43, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
 
               chart.renderer.text(`Total (${response.GrandToalCommunicating}/${response.GrandTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.63, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.61, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
@@ -188,7 +190,7 @@ export class DashbordComponent {
             color: '#4a88c7ff',
             fontSize: '18px',
             fontWeight: 'bold',
-            fontFamily: 'Arial, sans-serif'
+            fontFamily: 'Arial, sans-serif',
           }
         },
         tooltip: { enabled: true },
@@ -199,14 +201,15 @@ export class DashbordComponent {
             startAngle: 270,
             allowPointSelect: false,
             dataLabels: { enabled: false },
-            borderWidth: 0 // removes the tiny gap line
+            borderWidth: 0,// removes the tiny gap line
+
           }
         },
         series: [
           {
             type: 'pie',
             name: 'AG',
-            center: ['20%', '50%'],
+            center: ['10%', '50%'],
             size: 90,
             data: [
               { y: response.AgCommunicating, color: '#52A3F2' },
@@ -216,7 +219,7 @@ export class DashbordComponent {
           {
             type: 'pie',
             name: 'NON-AG',
-            center: ['40%', '50%'],
+            center: ['30%', '50%'],
             size: 90,
             data: [
               { y: response.NonAgCommunicating, color: '#72E8DA' },
@@ -226,7 +229,7 @@ export class DashbordComponent {
           {
             type: 'pie',
             name: '33KV',
-            center: ['60%', '50%'],
+            center: ['50%', '50%'],
             size: 90,
             data: [
               { y: response.kvComm33, color: '#72E8DA' },
@@ -236,7 +239,7 @@ export class DashbordComponent {
           {
             type: 'pie',
             name: 'Total',
-            center: ['80%', '50%'],
+            center: ['70%', '50%'],
             size: 90,
             data: [
               { y: response.GrandToalCommunicating, color: '#fd520e9d' },
@@ -250,6 +253,7 @@ export class DashbordComponent {
       Highcharts.chart(options);
     });
   }
+
 
 
   // Last seven days bar
@@ -268,11 +272,15 @@ export class DashbordComponent {
             animation: false,
             backgroundColor: '#ffffffff',
             reflow: true,
-            height: 200,  // Let container CSS control height
-            width: null    // Let container CSS control width
+            height: null,  // Let container CSS control height
+            width: null,   // Let container CSS control width
+            spacingTop: 10,
+            spacingBottom: -15,
+            spacingLeft: -15,
+            spacingRight: -5
           },
           title: {
-            text: '7 Days Status',
+            text: 'Last Week Communication',
             align: 'center',
             margin: 20,
             style: {
@@ -285,17 +293,18 @@ export class DashbordComponent {
           xAxis: {
             categories: this.lastSevenDaysMap.get('Date') ?? [],
             title: { text: 'Date' },
+            gridLineDashStyle: 'Dash',
             labels: { rotation: 0 },
             startOnTick: true,       // ensures axis starts at first tick
-            min: 0                   // start at first category
+            min: 0  ,                 // start at first category
+            gridLineWidth: 2
           },
           yAxis: {
             min: 0,
             max: upperLimit,
-            title: { text: 'Communication Count' },
             gridLineDashStyle: 'Dash',
-              endOnTick: false,      // prevents Highcharts from rounding up
-
+             gridLineWidth: 2,
+            endOnTick: false,      // prevents Highcharts from rounding up
             labels: {
               formatter: function () {
                 return this.value.toString();  // show actual number
@@ -306,18 +315,17 @@ export class DashbordComponent {
             column: {
               borderWidth: 0,
               dataLabels: { enabled: true },
-              pointWidth: 35,       // Fixed width of each column (adjust as needed)
-              pointPadding: 0.001,    // Space between columns in a group
-              groupPadding: 0.01,    // Space between column groups
-              pointPlacement: 0        // center columns on categories
-
+              pointWidth: 45,       // Fixed width of each column (adjust as needed)
+              pointPadding: 10,    // Space between columns in a group
+              groupPadding: 0.5,    // Space between column groups
             }
           },
           colors: ['#4a88c7', '#ff7f50', '#32cd32', '#ffd700', '#8a2be2', '#ff69b4', '#00ced1'],
           credits: { enabled: false },
           series: [{
             type: 'column',
-            name: 'Count',
+            showInLegend: false,
+            name: '',
             colorByPoint: true,
             data: (this.lastSevenDaysMap.get('communicationCount') ?? []).map(val => Number(val))
           }]
