@@ -73,13 +73,14 @@
 
 #communicationStatus {
   background-color: #6b95ea;
-  height: 200px;
+  height: 220px;
   border: solid;
   border-color: #e0e0e0;
+  margin-left: 2%;
 }
 #weekLast{
   background-color: #6b95ea;
-  height: 200px;
+  height: 220px;
   border: solid;
   border-color: #e0e0e0;
 }
@@ -93,7 +94,7 @@
 }
 #lastSevendaysCommunication {
   width: 100%;
-  height: 210px;
+  height: 220px;
   padding: 0;
   margin: 0;
   overflow: hidden;    /* hide overflow if any */
@@ -103,7 +104,7 @@
 }
 #signalStatus {
  width: 100%;
-  height: 210px;
+  height: 220px;
   padding: 0;
   margin: 0;
   overflow: hidden;    /* hide overflow if any */
@@ -111,7 +112,7 @@
 }
 #signalstrength{
    background-color: #6b95ea;
-  height: 200px;
+  height: 220px;
   border: solid;
   border-color: #e0e0e0;
 }

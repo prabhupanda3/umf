@@ -2,11 +2,16 @@ import { Component, ElementRef, Renderer2 } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { DashboardService } from 'src/app/service/Dashboard/dashboard.service';
 import HC_3D from 'highcharts/highcharts-3d';
+import HC_more from 'highcharts/highcharts-more';
+import HC_cylinder from 'highcharts/modules/cylinder';
 
 
 
 // Initialize 3D module
 HC_3D(Highcharts);
+HC_more(Highcharts);
+HC_cylinder(Highcharts);
+
 @Component({
   selector: 'app-dashbord',
   templateUrl: './dashbord.component.html',
@@ -131,10 +136,9 @@ export class DashbordComponent {
           renderTo: 'communicationStatus',
           type: 'pie',
           backgroundColor: '#ffffff',
-          height: 200,
+          height: null,
           width: null,
           animation: true,
-
           events: {
             load: function () {
               const chart = this as Highcharts.Chart;
@@ -159,7 +163,7 @@ export class DashbordComponent {
                 .add();
 
               chart.renderer.text(`Total (${response.GrandToalCommunicating}/${response.GrandTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.61, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.65, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
@@ -272,8 +276,8 @@ export class DashbordComponent {
         const options: Highcharts.Options = {
           chart: {
             renderTo: 'lastSevendaysCommunication',
-            type: 'column',
-            animation: false,
+            type: 'cylinder',
+            animation: true,
             backgroundColor: '#ffffffff',
             reflow: true,
             height: null,
@@ -287,7 +291,7 @@ export class DashbordComponent {
               alpha: 5,
               beta: -15,
               depth: -50,
-              viewDistance: -50
+              viewDistance: -150
             }
           },
           title: {
@@ -304,21 +308,32 @@ export class DashbordComponent {
               fontFamily: 'Arial, sans-serif'
             }
           },
+          tooltip: {
+            enabled: true,
+            formatter: function () {
+              const value = this.y ?? 0; // default to 0 if null/undefined
+              const percentage = (value / upperLimit) * 100;
+              return `<b>${this.x}</b>: ${value} (${percentage.toFixed(1)}%)`;
+            }
+          },
           xAxis: {
             categories: this.lastSevenDaysMap.get('Date') ?? [],
             title: { text: 'Date' },
             gridLineDashStyle: 'Dash',
+            gridLineWidth: 1,
             labels: { rotation: 0 },
             startOnTick: true,
             min: 0,
-            gridLineWidth: 2
           },
           yAxis: {
             min: 0,
             max: upperLimit,
             gridLineDashStyle: 'Dash',
-            gridLineWidth: 2,
+            gridLineWidth: 1,
             endOnTick: false,
+            title: {
+              text: '' // removes the y-axis title
+            },
             labels: {
               formatter: function () {
                 return this.value.toString();
@@ -333,7 +348,8 @@ export class DashbordComponent {
               dataLabels: { enabled: true },
               pointWidth: 35,
               pointPadding: 10,
-              groupPadding: 0.5
+              groupPadding: 0.5,
+              
             } as any,
           },
           colors: ['#4a88c7', '#ff7f50', '#32cd32', '#ffd700', '#8a2be2', '#ff69b4', '#00ced1'],
@@ -356,7 +372,7 @@ export class DashbordComponent {
     );
   }
 
-signalStrength() {
+  signalStrength() {
     this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
       (response) => {
         this.lastSevenDaysMap = new Map(Object.entries(response));
@@ -387,7 +403,7 @@ signalStrength() {
             text: '<span style="background: linear-gradient(to right, #4a88c7, #a3c7f0); \
          -webkit-background-clip: text; -webkit-text-fill-color: transparent; \
          font-size: 20px; font-weight: bold; font-family: Segoe UI, Arial;">\
-         Last Week Communication</span>',
+         Signal Strength</span>',
             align: 'center',
             margin: -20,
             style: {
@@ -404,19 +420,23 @@ signalStrength() {
             labels: { rotation: 0 },
             startOnTick: true,
             min: 0,
-            gridLineWidth: 2
+            gridLineWidth: 1,
+
           },
           yAxis: {
             min: 0,
             max: upperLimit,
             gridLineDashStyle: 'Dash',
-            gridLineWidth: 2,
+            gridLineWidth: 1,
             endOnTick: false,
             labels: {
               formatter: function () {
                 return this.value.toString();
               }
-            }
+            },
+            title: {
+              text: '' // removes the y-axis title
+            },
           },
           plotOptions: {
             column: {
