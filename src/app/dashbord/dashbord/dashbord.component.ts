@@ -3,6 +3,8 @@ import * as Highcharts from 'highcharts';
 import { DashboardService } from 'src/app/service/Dashboard/dashboard.service';
 import HC_3D from 'highcharts/highcharts-3d';
 
+
+
 // Initialize 3D module
 HC_3D(Highcharts);
 @Component({
@@ -111,6 +113,7 @@ export class DashbordComponent {
     this.hload.date = this.reportDate;
     this.getDayLiveCommunicationSummary();
     this.getLastSevenDaysCommunicationStatus();
+    this.signalStrength();
   }
   //Communication Related Variable
   AgCommunicating!: number;
@@ -125,13 +128,12 @@ export class DashbordComponent {
     this.dashboardService.getDayCommunicationSummary(this.hload).subscribe((response) => {
       const options: Highcharts.Options = {
         chart: {
-          renderTo: 'cs-container',
+          renderTo: 'communicationStatus',
           type: 'pie',
           backgroundColor: '#ffffff',
           height: 200,
           width: null,
           animation: true,
-          spacingRight: -5,
 
           events: {
             load: function () {
@@ -183,7 +185,10 @@ export class DashbordComponent {
           }
         },
         title: {
-          text: 'Live Communication',
+          text: '<span style="background: linear-gradient(to right, #4a88c7, #a3c7f0); \
+         -webkit-background-clip: text; -webkit-text-fill-color: transparent; \
+         font-size: 20px; font-weight: bold; font-family: Segoe UI, Arial;">\
+         Last Week Communication</span>',
           align: 'center',
           margin: 20,
           style: {
@@ -219,7 +224,7 @@ export class DashbordComponent {
           {
             type: 'pie',
             name: 'NON-AG',
-            center: ['30%', '50%'],
+            center: ['35%', '50%'],
             size: 90,
             data: [
               { y: response.NonAgCommunicating, color: '#72E8DA' },
@@ -229,7 +234,7 @@ export class DashbordComponent {
           {
             type: 'pie',
             name: '33KV',
-            center: ['50%', '50%'],
+            center: ['60%', '50%'],
             size: 90,
             data: [
               { y: response.kvComm33, color: '#72E8DA' },
@@ -239,7 +244,7 @@ export class DashbordComponent {
           {
             type: 'pie',
             name: 'Total',
-            center: ['70%', '50%'],
+            center: ['85%', '50%'],
             size: 90,
             data: [
               { y: response.GrandToalCommunicating, color: '#fd520e9d' },
@@ -258,7 +263,6 @@ export class DashbordComponent {
 
   // Last seven days bar
   lastSevenDaysMap!: Map<string, string[]>;
-
   getLastSevenDaysCommunicationStatus() {
     this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
       (response) => {
@@ -272,17 +276,27 @@ export class DashbordComponent {
             animation: false,
             backgroundColor: '#ffffffff',
             reflow: true,
-            height: null,  // Let container CSS control height
-            width: null,   // Let container CSS control width
+            height: null,
+            width: null,
             spacingTop: 10,
-            spacingBottom: -15,
-            spacingLeft: -15,
-            spacingRight: -5
+            spacingBottom: -5,
+            spacingLeft: -5,
+            spacingRight: 0,
+            options3d: {
+              enabled: true,
+              alpha: 5,
+              beta: -15,
+              depth: -50,
+              viewDistance: -50
+            }
           },
           title: {
-            text: 'Last Week Communication',
+            text: '<span style="background: linear-gradient(to right, #4a88c7, #a3c7f0); \
+         -webkit-background-clip: text; -webkit-text-fill-color: transparent; \
+         font-size: 20px; font-weight: bold; font-family: Segoe UI, Arial;">\
+         Last Week Communication</span>',
             align: 'center',
-            margin: 20,
+            margin: -20,
             style: {
               color: '#4a88c7ff',
               fontSize: '18px',
@@ -295,40 +309,43 @@ export class DashbordComponent {
             title: { text: 'Date' },
             gridLineDashStyle: 'Dash',
             labels: { rotation: 0 },
-            startOnTick: true,       // ensures axis starts at first tick
-            min: 0  ,                 // start at first category
+            startOnTick: true,
+            min: 0,
             gridLineWidth: 2
           },
           yAxis: {
             min: 0,
             max: upperLimit,
             gridLineDashStyle: 'Dash',
-             gridLineWidth: 2,
-            endOnTick: false,      // prevents Highcharts from rounding up
+            gridLineWidth: 2,
+            endOnTick: false,
             labels: {
               formatter: function () {
-                return this.value.toString();  // show actual number
+                return this.value.toString();
               }
             }
           },
           plotOptions: {
             column: {
+              depth: 25,
               borderWidth: 0,
+              shape: 'cylinder', // makes columns cylindrical
               dataLabels: { enabled: true },
-              pointWidth: 45,       // Fixed width of each column (adjust as needed)
-              pointPadding: 10,    // Space between columns in a group
-              groupPadding: 0.5,    // Space between column groups
-            }
+              pointWidth: 35,
+              pointPadding: 10,
+              groupPadding: 0.5
+            } as any,
           },
           colors: ['#4a88c7', '#ff7f50', '#32cd32', '#ffd700', '#8a2be2', '#ff69b4', '#00ced1'],
           credits: { enabled: false },
           series: [{
             type: 'column',
+            shape: 'cylinder',  // Cylinder shape for 3D column
             showInLegend: false,
             name: '',
             colorByPoint: true,
             data: (this.lastSevenDaysMap.get('communicationCount') ?? []).map(val => Number(val))
-          }]
+          } as any]
         };
 
         Highcharts.chart(options);
@@ -339,8 +356,98 @@ export class DashbordComponent {
     );
   }
 
+signalStrength() {
+    this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
+      (response) => {
+        this.lastSevenDaysMap = new Map(Object.entries(response));
+        const upperLimit = Number((this.lastSevenDaysMap.get('TotalCount') ?? [0])[0]);
 
+        const options: Highcharts.Options = {
+          chart: {
+            renderTo: 'signalStatus',
+            type: 'column',
+            animation: false,
+            backgroundColor: '#ffffffff',
+            reflow: true,
+            height: null,
+            width: null,
+            spacingTop: 10,
+            spacingBottom: -5,
+            spacingLeft: -5,
+            spacingRight: 0,
+            options3d: {
+              enabled: true,
+              alpha: 5,
+              beta: -15,
+              depth: -50,
+              viewDistance: -50
+            }
+          },
+          title: {
+            text: '<span style="background: linear-gradient(to right, #4a88c7, #a3c7f0); \
+         -webkit-background-clip: text; -webkit-text-fill-color: transparent; \
+         font-size: 20px; font-weight: bold; font-family: Segoe UI, Arial;">\
+         Last Week Communication</span>',
+            align: 'center',
+            margin: -20,
+            style: {
+              color: '#4a88c7ff',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              fontFamily: 'Arial, sans-serif'
+            }
+          },
+          xAxis: {
+            categories: this.lastSevenDaysMap.get('Date') ?? [],
+            title: { text: 'Date' },
+            gridLineDashStyle: 'Dash',
+            labels: { rotation: 0 },
+            startOnTick: true,
+            min: 0,
+            gridLineWidth: 2
+          },
+          yAxis: {
+            min: 0,
+            max: upperLimit,
+            gridLineDashStyle: 'Dash',
+            gridLineWidth: 2,
+            endOnTick: false,
+            labels: {
+              formatter: function () {
+                return this.value.toString();
+              }
+            }
+          },
+          plotOptions: {
+            column: {
+              depth: 25,
+              borderWidth: 0,
+              shape: 'cylinder', // makes columns cylindrical
+              dataLabels: { enabled: true },
+              pointWidth: 35,
+              pointPadding: 10,
+              groupPadding: 0.5
+            } as any,
+          },
+          colors: ['#4a88c7', '#ff7f50', '#32cd32', '#ffd700', '#8a2be2', '#ff69b4', '#00ced1'],
+          credits: { enabled: false },
+          series: [{
+            type: 'column',
+            shape: 'cylinder',  // Cylinder shape for 3D column
+            showInLegend: false,
+            name: '',
+            colorByPoint: true,
+            data: (this.lastSevenDaysMap.get('communicationCount') ?? []).map(val => Number(val))
+          } as any]
+        };
 
+        Highcharts.chart(options);
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
+  }
   getDefaultDate() {
     const today = new Date();
 
