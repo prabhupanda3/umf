@@ -349,7 +349,7 @@ export class DashbordComponent {
               pointWidth: 35,
               pointPadding: 10,
               groupPadding: 0.5,
-              
+
             } as any,
           },
           colors: ['#4a88c7', '#ff7f50', '#32cd32', '#ffd700', '#8a2be2', '#ff69b4', '#00ced1'],

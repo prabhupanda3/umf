@@ -50,9 +50,5 @@ export class LoginComponent {
         console.error("Authentication failed:", error);
       }
     );
-
-
-
-
   }
 }

@@ -1,73 +1,73 @@
 <div class="wrapper">
-  <div class="content-wrapper">
-    <div class="panel panel-bd">
-      <div class="panel-heading" style="width: 100%;background-color: #075E54;height: 2%;">
-        <div class="panel-titel" style="width: 100%;">
-          <h4 style="color: #fafaff;font-size: large;padding-left: 35%;padding-top: 2%;">USER ROLE MASTER</h4>
-          <div class="btn-group pull-right clearfix" style="margin-left: 95%;margin-top: -3%;">
-            <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }" [disabled]="!isactivateButton()"
-              (click)="getModuleSubmodule()" style="color: white;" class="btn">ADD</button>
-          </div>
+  <div class="content-wrapper container-fluid py-3">
+    <div class="panel shadow rounded-3">
+      
+      <!-- Panel Heading -->
+      <div class="panel-heading d-flex align-items-center justify-content-between px-3 py-2"
+           style="background-color: #075E54;">
+        <h4 class="text-white mb-0">USER ROLE MASTER</h4>
+        <div>
+          <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }"
+                  [disabled]="!isactivateButton()"
+                  (click)="getModuleSubmodule()"
+                  class="btn text-white btn-sm fw-bold">
+            ADD
+          </button>
         </div>
       </div>
 
-      <div style="margin-top: 2%;" class="panel-body table-responsive">
+      <!-- Panel Body -->
+      <div class="panel-body p-3">
+        
+        <!-- Export Buttons -->
         <div class="mb-3 d-flex justify-content-end gap-2">
-          <button (click)="documentExport('csv')" class="btn btn-outline-success btn-sm mr-2">Export CSV</button>
-          <button (click)="documentExport('excel')" class="btn btn-outline-primary btn-sm mr-2">Export Excel</button>
-          <button (click)="documentExport('pdf')" class="btn btn-outline-danger btn-sm">Export PDF</button>
+          <button (click)="documentExport('csv')" class="btn btn-outline-success btn-sm">
+            Export CSV
+          </button>
+          <button (click)="documentExport('excel')" class="btn btn-outline-primary btn-sm">
+            Export Excel
+          </button>
+          <button (click)="documentExport('pdf')" class="btn btn-outline-danger btn-sm">
+            Export PDF
+          </button>
         </div>
-        <table id="allChildRole" class="table table-striped table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th>Authority Name</th>
-              <th>Role Name</th>
-              <th>Parent Role</th>
-              <th>Description</th>
-              <th>Actions</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let role of roles">
-              <td class="centered-cell">{{role.authority}}</td>
-              <td class="centered-cell">{{role.roleName}}</td>
-              <td class="centered-cell">{{role.parentRole}}</td>
-              <td class="centered-cell">{{role.roleDes}}</td>
-              <td class="centered-cell">
-                <div class="d-flex gap-2">
-                  <button type="button" class="btn btn-secondary btn-sm"
-                    [routerLink]="['/roleupadte', role.authority]">Edit</button>
-                  <button type="button" class="btn btn-danger btn-sm"
-                    (click)="deleteRoleByAutherityName(role.authority)">Delete</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Roles Table -->
+        <div class="table-responsive">
+          <table id="allChildRole" class="table table-bordered table-hover align-middle table-striped">
+            <thead class="table-dark text-center">
+              <tr>
+                <th>Authority Name</th>
+                <th>Role Name</th>
+                <th>Parent Role</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let role of roles" class="text-center">
+                <td>{{role.authority}}</td>
+                <td>{{role.roleName}}</td>
+                <td>{{role.parentRole}}</td>
+                <td>{{role.roleDes}}</td>
+                <td>
+                  <div class="d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-secondary btn-sm"
+                            [routerLink]="['/roleupadte', role.authority]">
+                      Edit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm"
+                            (click)="deleteRoleByAutherityName(role.authority)">
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>
-
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-left: 1.5%;
-      margin-right: 3%;
-
-    }
-
-    th,
-    td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-
-    .centered-cell {
-      text-align: center;
-      vertical-align: middle;
-    }
-  </style>
 </div>

@@ -1,14 +1,35 @@
-#hadding{
-    background-color:#075E54;
-    font-size: x-large;
-    color:#ffffff;
-     padding-left: 20%;
-     height: 10%;
-     margin-top: -2%;
-     
+.module-row {
+  margin-left: 0; /* Let Bootstrap handle spacing */
 }
-#subDiv_1{
-   
-background-color: #7a2bc4;
 
+.module-card {
+  background-image: linear-gradient(to right, #0d3c65, #3b83c0);
+  padding: 12px;
+  border-radius: 12px;
+  min-height: 150px;
+  margin-bottom: 16px; /* Space between rows */
+  box-shadow: 0 4px 12px rgba(85, 109, 206, 0.1);
+  box-sizing: border-box;
+}
+
+.module-title {
+  font-weight: bold;
+  color: #ffffff;
+  padding-left: 80px;
+  font-size: 16px;
+}
+
+.submodule {
+  background-color: #ffffff;
+  margin: 4px 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submodule:hover {
+  background-color: #f0f0f0;
 }

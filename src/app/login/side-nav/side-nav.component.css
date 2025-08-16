@@ -1,0 +1,33 @@
+/* Sidebar collapsed by default */
+.sidebar {
+  width: 60px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Expand sidebar on hover */
+.sidebar:hover {
+  width: 180px;
+}
+
+/* Hide text by default */
+.module-text {
+  display: none;
+}
+
+/* Show text only when sidebar expands */
+.sidebar:hover .module-text {
+  display: inline-block;
+}
+
+/* Submodules styling */
+.submodule-list {
+  margin-left: 15px;
+}
+
+.nav-link {
+  padding: 10px;
+  color: #333;
+  cursor: pointer;
+}

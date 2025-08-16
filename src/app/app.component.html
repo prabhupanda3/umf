@@ -1,3 +1,16 @@
-<div>
+<ng-container *ngIf="showLayout">
+    <app-header></app-header>
+
+    <div class="d-flex" style="flex: 1; min-height: calc(100vh - 100px);">
+        <app-side-nav></app-side-nav>
+        <div class="flex-fill p-0">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ng-container>
+
+<ng-container *ngIf="!showLayout">
+    <!-- Login page layout -->
     <router-outlet></router-outlet>
-</div>
+</ng-container>

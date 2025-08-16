@@ -18,7 +18,7 @@ const routes: Routes = [
   {path:'chat',component:ChatComponent},
  {path:'usermanagement',component:UserManagementComponent},
  {path:'userMaster',component:UserMasterComponent},
- {path:'userRoleMaster',component:UserRoleMasterComponent},
+ {path:'userRole',component:UserRoleMasterComponent},
  {path:'roleCreation',component:RoleCreationComponent},
  {path:'roleupadte/:authority',component:RoleUpdateComponent},
 

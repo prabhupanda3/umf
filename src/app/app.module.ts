@@ -14,11 +14,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatComponent } from './chat/chat.component';
 import { RouterModule } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SideNavComponent } from './login/side-nav/side-nav.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ChatComponent,
+        
     ],
     bootstrap: [AppComponent],
     imports: [

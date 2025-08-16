@@ -1,0 +1,13 @@
+<div class="row module-row">
+  <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let module of moduleList">
+    <div class="module-card">
+      <span class="module-title">{{ module.moduleName }}</span>
+
+      <div class="submodule"
+           *ngFor="let sub of module.subModule"
+           (click)="navigateTo(sub.url)">
+        {{ sub.submoduleName }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="bg-light border-end vh-100 p-2 sidebar">
+  <ul class="nav flex-column">
+
+    <li class="nav-item"
+        *ngFor="let module of moduleList"
+        (mouseenter)="module.isOpen = true"
+        (mouseleave)="module.isOpen = false">
+
+      <!-- Icon + Module Name -->
+      <a class="nav-link d-flex align-items-center" role="button">
+        <i [class]="module.icon" style="color: #057c99; font-size: 20px;"></i>
+        <span class="module-text ms-2">{{ module.moduleName }}</span>
+      </a>
+
+      <!-- Submodules (show only if hovered on that module) -->
+      <ul class="nav flex-column ms-4 submodule-list" *ngIf="module.subModule?.length && module.isOpen">
+        <li *ngFor="let sub of module.subModule">
+          <a class="nav-link" (click)="navigateTo(sub.url)">
+            {{ sub.submoduleName }}
+          </a>
+        </li>
+      </ul>
+
+    </li>
+
+  </ul>
+</div>
