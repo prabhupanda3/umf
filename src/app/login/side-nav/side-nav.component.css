@@ -1,6 +1,6 @@
 /* Sidebar collapsed by default */
 .sidebar {
-  width: 60px;
+  width: 60px;  /* only icon width */
   transition: width 0.3s ease;
   overflow: hidden;
   white-space: nowrap;
@@ -8,26 +8,43 @@
 
 /* Expand sidebar on hover */
 .sidebar:hover {
-  width: 180px;
+  width: 200px;
 }
 
-/* Hide text by default */
+/* Hide module text completely (no space) */
 .module-text {
-  display: none;
+  display: none !important;
 }
 
-/* Show text only when sidebar expands */
+/* Show module text only when sidebar expands */
 .sidebar:hover .module-text {
-  display: inline-block;
+  display: inline-block !important;
+}
+
+/* Icon styling */
+.module-icon {
+  font-size: 20px;
+  color: #057c99;
 }
 
 /* Submodules styling */
 .submodule-list {
-  margin-left: 15px;
+  margin-left: 40px;   /* indent inside expanded sidebar */
+  padding-left: 5px;
+  border-left: 2px solid #02BEEE;
 }
 
 .nav-link {
-  padding: 10px;
+  padding: 8px 10px;
   color: #333;
   cursor: pointer;
+}
+
+.spanstyle {
+  background: linear-gradient(to bottom, #01060A, #02BEEE);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
 }

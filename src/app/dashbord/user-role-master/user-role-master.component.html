@@ -1,16 +1,14 @@
 <div class="wrapper">
   <div class="content-wrapper container-fluid py-3">
     <div class="panel shadow rounded-3">
-      
+
       <!-- Panel Heading -->
       <div class="panel-heading d-flex align-items-center justify-content-between px-3 py-2"
-           style="background-color: #075E54;">
+        style="background-color: #075E54;">
         <h4 class="text-white mb-0">USER ROLE MASTER</h4>
         <div>
-          <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }"
-                  [disabled]="!isactivateButton()"
-                  (click)="getModuleSubmodule()"
-                  class="btn text-white btn-sm fw-bold">
+          <button [ngStyle]="{ 'background-color': active ? 'green' : '#a1f9c7' }" [disabled]="!isactivateButton()"
+            (click)="getModuleSubmodule()" class="btn text-white btn-sm fw-bold">
             ADD
           </button>
         </div>
@@ -18,7 +16,6 @@
 
       <!-- Panel Body -->
       <div class="panel-body p-3">
-        
         <!-- Export Buttons -->
         <div class="mb-3 d-flex justify-content-end gap-2">
           <button (click)="documentExport('csv')" class="btn btn-outline-success btn-sm">
@@ -53,11 +50,11 @@
                 <td>
                   <div class="d-flex justify-content-center gap-2">
                     <button type="button" class="btn btn-secondary btn-sm"
-                            [routerLink]="['/roleupadte', role.authority]">
+                      [routerLink]="['/roleupadte', role.authority]">
                       Edit
                     </button>
                     <button type="button" class="btn btn-danger btn-sm"
-                            (click)="deleteRoleByAutherityName(role.authority)">
+                      (click)="deleteRoleByAutherityName(role.authority)">
                       Delete
                     </button>
                   </div>

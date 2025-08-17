@@ -9,13 +9,15 @@
       <!-- Body -->
       <div class="card-body">
         <!-- Hierarchy Selector -->
-        <div id="hierarchySelector" class="container-fluid mb-3" >
+        <div id="hierarchySelector" class="container-fluid mb-3">
           <div class="d-flex flex-nowrap align-items-end gap-2 overflow-auto p-0">
-            
+
             <!-- Hierarchy Dropdowns -->
-            <div *ngFor="let level of levels; let i = index; trackBy: trackByLevel" class="flex-shrink-0" style="min-width: 190px;">
+            <div *ngFor="let level of levels; let i = index; trackBy: trackByLevel" class="flex-shrink-0"
+              style="min-width: 190px;">
               <label class="form-label">{{ level }}</label>
-              <select class="form-select" [(ngModel)]="selectedValues[i]" (change)="onLevelChange(i, selectedValues[i], level)">
+              <select class="form-select" [(ngModel)]="selectedValues[i]"
+                (change)="onLevelChange(i, selectedValues[i], level)">
                 <option value="">--all--</option>
                 <option *ngFor="let opt of getOptionsForLevel(level)" [value]="opt.id">
                   {{ opt.name }}
@@ -37,23 +39,24 @@
         </div>
 
         <!-- Communication Summary -->
-        <div id="communicationSummary" class="container-fluid g-2">
-          <div class="row g-2">
+        <div id="communicationSummary" class="container-fluid">
+          <div class="row gap-2"> 
+
             <div class="col-md-4 d-flex flex-column bg-light p-0" id="communicationStatus"></div>
 
-            <div class="col-md-4 d-flex flex-column bg-light p-0 g-2" id="weekLast">
+            <div class="col-md-4 d-flex flex-column bg-light p-0" id="weekLast">
               <div id="lastSevendaysCommunication" class="d-inline-block border w-100 h-100"></div>
             </div>
 
-            <div class="col-md-3 d-flex flex-column bg-light p-0 g-2" id="signalstrength">
+            <div class="col-md-3 d-flex flex-column bg-light p-0" id="signalstrength">
               <div id="signalStatus" class="d-inline-block border w-100 h-100"></div>
             </div>
+
           </div>
         </div>
-      </div>
 
-      <!-- Footer -->
-      <div class="card-footer"></div>
+
+        <!-- Footer -->
+      </div>
     </div>
   </div>
-</div>
