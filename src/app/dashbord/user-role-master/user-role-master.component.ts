@@ -59,9 +59,9 @@ export class UserRoleMasterComponent {
     try {
       this.moduleDetails = JSON.parse(this.roleaccess);
       this.active = false; // Initialize active to false
-      for (const smactions of this.moduleDetails.sabmoduleAction) {
+      for (const smactions of this.moduleDetails.submoduleAction) {
 
-        if (smactions.sabmodule.submoduleName === "UserRoleManagement") {
+        if (smactions.sabmodule.submoduleName === "Role Master") {
           if (smactions.add == "1") {
             console.log("Add" + smactions.sabmodule.add)
             this.active = true;

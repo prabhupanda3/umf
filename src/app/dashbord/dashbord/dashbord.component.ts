@@ -46,7 +46,6 @@ export class DashbordComponent {
     hirarchyLevel: this.leveId,
     date: new Date().toISOString().split('T')[0],
     hierarchyName: this.hierarchyName,
-
   };
   //Hierarchy Data
   hierarchyHolder = new Map<string, Map<number, string>>();
@@ -56,6 +55,8 @@ export class DashbordComponent {
     this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
       (response: Map<string, Map<number, string>>) => {
         this.hierarchyHolder = new Map(Object.entries(response));
+       this.hload.hierarchyId= Number(Array.from(this.hierarchyHolder.keys())[0]);
+       this.hload.hirarchyLevel="0";
       },
       (error) => {
       }

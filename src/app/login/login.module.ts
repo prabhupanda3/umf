@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { AppRoutingModule } from "src/app/app-routing.module";
 
 
 
@@ -17,9 +18,9 @@ import { SideNavComponent } from './side-nav/side-nav.component';
   ],
   imports: [
     CommonModule,
-    FormsModule
-    
-  ],
+    FormsModule,
+    AppRoutingModule
+],
   exports:[LoginComponent,HeaderComponent,FooterComponent,SideNavComponent]
 
 })
