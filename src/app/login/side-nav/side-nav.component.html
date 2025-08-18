@@ -13,8 +13,9 @@
           {{ module.moduleName }}
         </span>
       </a>
+  <!-- background: linear-gradient(to bottom, #01060A, #02BEEE);
 
-      <!-- Submodules (visible only when hovered & sidebar expanded) -->
+       Submodules (visible only when hovered & sidebar expanded) -->
       <ul class="nav flex-column submodule-list gap-2"
           *ngIf="module.subModule?.length && module.isOpen">
         <li *ngFor="let sub of module.subModule">

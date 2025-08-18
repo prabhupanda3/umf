@@ -15,13 +15,13 @@
           <div class="col-md-6">
             <label class="form-label fw-bold">User Role:</label>
             <input type="text" [(ngModel)]="roleName" placeholder="Role"
-              class="form-control shadow-sm border-primary rounded-2">
+              class="form-control form-control-sm shadow-sm border-primary rounded-2 w-50">
           </div>
 
           <div class="col-md-6">
             <label class="form-label fw-bold">User Role Description:</label>
             <input type="text" [(ngModel)]="roleDes" placeholder="Description"
-              class="form-control shadow-sm border-primary rounded-2">
+              class="form-control form-control-sm shadow-sm border-primary rounded-2 w-50">
           </div>
         </div>
 
@@ -30,7 +30,7 @@
           <div class="col-md-6">
             <label for="hierarchyDropdown" class="form-label fw-bold">Hierarchy Level:</label>
             <select id="hierarchyDropdown" [(ngModel)]="hierarchy"
-              class="form-select shadow-sm border-primary rounded-2" [ngClass]="{'is-invalid': !hierarchy}">
+              class="form-select form-select-sm shadow-sm border-primary rounded-2 w-50" [ngClass]="{'is-invalid': !hierarchy}">
               <option value="" disabled selected>Select a hierarchy</option>
               <option *ngFor="let item of hirarchyList" [value]="item">{{ item }}</option>
             </select>
@@ -39,7 +39,7 @@
           <div class="col-md-6">
             <label for="parentRole" class="form-label fw-bold">Parent Role:</label>
             <select id="parentRole" [(ngModel)]="parentrole"
-              class="form-select shadow-sm border-primary rounded-2">
+              class="form-select form-select-sm shadow-sm border-primary rounded-2 w-50">
               <option value="" disabled selected>Select a parent role</option>
               <option *ngFor="let option of parentHirarchy" [value]="option">{{ option }}</option>
             </select>

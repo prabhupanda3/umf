@@ -1,44 +1,38 @@
 <div class="wrapper">
   <div class="content-wrapper">
     <div class="shadow-sm rounded-3 border">
-      
       <!-- Header -->
       <div class="text-white p-3 rounded-top" style="background-color: #075E54; color: #ffffff;">
         <h4 class="mb-0 text-center">USER ROLE MASTER</h4>
       </div>
-
       <!-- Body -->
       <div class="p-4">
-
         <!-- User Role & Description -->
         <div class="row g-4 mb-3">
           <div class="col-md-6">
             <label class="form-label fw-bold">User Role:</label>
             <input type="text" [(ngModel)]="roleName" placeholder="Role"
-              class="form-control shadow-sm rounded-2 border-primary">
+              class="form-control form-control-sm shadow-sm rounded-2 border-primary w-50">
           </div>
           <div class="col-md-6">
             <label class="form-label fw-bold">User Role Description:</label>
             <input type="text" [(ngModel)]="roleDes" placeholder="Description"
-              class="form-control shadow-sm rounded-2 border-primary">
+              class="form-control form-control-sm shadow-sm rounded-2 border-primary w-50">
           </div>
         </div>
-
         <!-- Hierarchy Level & Parent Role -->
         <div class="row g-4 mb-4">
           <div class="col-md-6">
             <label for="hierarchyDropdown" class="form-label fw-bold">Hierarchy Level:</label>
             <select id="hierarchyDropdown" [(ngModel)]="hierarchy"
-              class="form-select shadow-sm rounded-2 border-primary"
-              [ngClass]="{'is-invalid': !hierarchy}">
+              class="form-select form-select-sm shadow-sm rounded-2 border-primary w-50" [ngClass]="{'is-invalid': !hierarchy}">
               <option value="" disabled>Select a hierarchy</option>
               <option *ngFor="let item of hirarchyList" [value]="item">{{ item }}</option>
             </select>
           </div>
           <div class="col-md-6">
             <label for="parentRole" class="form-label fw-bold">Parent Role:</label>
-            <select id="parentRole" [(ngModel)]="parentrole"
-              class="form-select shadow-sm rounded-2 border-primary">
+            <select id="parentRole" [(ngModel)]="parentrole" class="form-select form-select-sm shadow-sm rounded-2 border-primary w-50">
               <option value="" disabled>Select a parent role</option>
               <option *ngFor="let option of parentHirarchy" [value]="option">{{ option }}</option>
             </select>

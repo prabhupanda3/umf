@@ -38,8 +38,12 @@ export class DashbordComponent {
     //this.getAvailableUserHirarchy();
     this.getDefaultDate();
     this.getHierarchyDetails();
+  //this.getReport();
+  }
+  ngAfterContentInit(){
     this.getReport();
   }
+  
   hload: { username: string | null, hierarchyId: number, hirarchyLevel: string, date: string, hierarchyName: string | null } = {
     username: sessionStorage.getItem('username'),
     hierarchyId: this.hid,

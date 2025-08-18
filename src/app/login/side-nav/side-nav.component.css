@@ -41,8 +41,8 @@
 }
 
 .spanstyle {
-  background: linear-gradient(to bottom, #01060A, #02BEEE);
-  color: #ffffff;
+background-color: #ececec;
+  color: #000000;
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: 500;

@@ -1,12 +1,40 @@
 .logo-btn {
-  height: 50px;              /* Same height as navbar */
-  width: 70px;               /* Slightly wider */
-  font-weight: bold;         /* Bold letters */
-  font-size: 18px;           /* Bigger text */
-  letter-spacing: 2px;       /* Spread out like a logo */
-  border-radius: 6px;        /* Rounded edges */
-  background: white;         /* White background (like logo bg) */
-  color: #C82909;            /* Brand color */
-  border: 2px solid #006984; /* Border matches navbar */
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* Logo effect */
+  height: 50px;              
+  width: 70px;               
+  font-weight: bold;         
+  font-size: 18px;           
+  letter-spacing: 2px;       
+  border-radius: 6px;        
+  background: white;         
+  color: #C82909;            
+  border: 2px solid #006984; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2); 
+  cursor: pointer;
+
+  /* Animation base */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.logo-btn:hover {
+  background: #C82909;     /* Fill with brand border color */
+  color: white;            /* Text becomes white */
+  transform: scale(1.1);   /* Slight zoom */
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+}
+.animated-title {
+  display: inline-block;
+  white-space: nowrap;  /* Prevent text wrapping */
+  overflow: hidden;
+  position: relative;
+  animation: slideText 10s linear infinite; /* Speed & repeat */
+}
+
+@keyframes slideText {
+  0% {
+    transform: translateX(-100%); /* Start outside left */
+  }
+  100% {
+    transform: translateX(100%);  /* Move completely to right */
+  }
 }
