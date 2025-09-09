@@ -38,12 +38,12 @@ export class DashbordComponent {
     //this.getAvailableUserHirarchy();
     this.getDefaultDate();
     this.getHierarchyDetails();
-  //this.getReport();
+    //this.getReport();
   }
-  ngAfterContentInit(){
+  ngAfterContentInit() {
     this.getReport();
   }
-  
+
   hload: { username: string | null, hierarchyId: number, hirarchyLevel: string, date: string, hierarchyName: string | null } = {
     username: sessionStorage.getItem('username'),
     hierarchyId: this.hid,
@@ -59,8 +59,8 @@ export class DashbordComponent {
     this.dashboardService.getAvailableUserHirarchyData(this.hload).subscribe(
       (response: Map<string, Map<number, string>>) => {
         this.hierarchyHolder = new Map(Object.entries(response));
-       this.hload.hierarchyId= Number(Array.from(this.hierarchyHolder.keys())[0]);
-       this.hload.hirarchyLevel="0";
+        this.hload.hierarchyId = Number(Array.from(this.hierarchyHolder.keys())[0]);
+        this.hload.hirarchyLevel = "0";
       },
       (error) => {
       }
@@ -156,19 +156,19 @@ export class DashbordComponent {
                 .add();
 
               chart.renderer.text(`NON-AG (${response.NonAgCommunicating}/${response.NonAgTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.21, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.23, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
 
               chart.renderer.text(`33KV (${response.kvComm33}/${response.kvtotal33})`,
-                chart.plotLeft + chart.chartWidth * 0.43, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.47, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
 
               chart.renderer.text(`Total (${response.GrandToalCommunicating}/${response.GrandTotal})`,
-                chart.plotLeft + chart.chartWidth * 0.65, chart.plotTop)
+                chart.plotLeft + chart.chartWidth * 0.68, chart.plotTop)
                 .css({ color: '#333', fontSize: '10px', fontWeight: 'bold' })
                 .attr({ zIndex: 5 })
                 .add();
@@ -376,12 +376,15 @@ export class DashbordComponent {
       }
     );
   }
-
+  devicesignalStrength!: Map<String, Number>
   signalStrength() {
-    this.dashboardService.getSevenDaysCommunication(this.hload).subscribe(
+    this.dashboardService.getSignalStrength(this.hload).subscribe(
       (response) => {
-        this.lastSevenDaysMap = new Map(Object.entries(response));
-        const upperLimit = Number((this.lastSevenDaysMap.get('TotalCount') ?? [0])[0]);
+        this.devicesignalStrength = new Map(Object.entries(response));
+
+        // Extract categories & values
+        const categories: string[] = Array.from(this.devicesignalStrength.keys()).map(k => String(k));
+        const values: number[] = Array.from(this.devicesignalStrength.values()).map(v => Number(v));
 
         const options: Highcharts.Options = {
           chart: {
@@ -400,8 +403,8 @@ export class DashbordComponent {
               enabled: true,
               alpha: 5,
               beta: -15,
-              depth: -50,
-              viewDistance: -50
+              depth: 50,  // depth should be positive
+              viewDistance: 25
             }
           },
           title: {
@@ -410,38 +413,29 @@ export class DashbordComponent {
          font-size: 20px; font-weight: bold; font-family: Segoe UI, Arial;">\
          Signal Strength</span>',
             align: 'center',
-            margin: -20,
-            style: {
-              color: '#4a88c7ff',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              fontFamily: 'Arial, sans-serif'
-            }
+            margin: -20
           },
           xAxis: {
-            categories: this.lastSevenDaysMap.get('Date') ?? [],
-            title: { text: 'Date' },
+            categories: categories,
+            title: { text: 'Signal Category' },
             gridLineDashStyle: 'Dash',
             labels: { rotation: 0 },
-            startOnTick: true,
-            min: 0,
             gridLineWidth: 1,
-
           },
           yAxis: {
             min: 0,
-            max: upperLimit,
+            max: values[0] + values[1] + values[2],
             gridLineDashStyle: 'Dash',
             gridLineWidth: 1,
             endOnTick: false,
+            title: {
+              text: '' // removes the y-axis title
+            },
             labels: {
               formatter: function () {
                 return this.value.toString();
               }
-            },
-            title: {
-              text: '' // removes the y-axis title
-            },
+            }
           },
           plotOptions: {
             column: {
@@ -451,34 +445,38 @@ export class DashbordComponent {
               dataLabels: { enabled: true },
               pointWidth: 35,
               pointPadding: 10,
-              groupPadding: 0.5
+              groupPadding: 0.5,
             } as any,
           },
-          colors: ['#4a88c7', '#ff7f50', '#32cd32', '#ffd700', '#8a2be2', '#ff69b4', '#00ced1'],
+          colors: ['#52A3F2', '#ff7f50', '#32cd32'], // assign colors to Good, Moderate, Bad
           credits: { enabled: false },
           series: [{
             type: 'column',
-            shape: 'cylinder',  // Cylinder shape for 3D column
-            showInLegend: false,
             name: '',
+            showInLegend: false,
             colorByPoint: true,
-            data: (this.lastSevenDaysMap.get('communicationCount') ?? []).map(val => Number(val))
-          } as any]
+            data: values   // [628, 3, 1873]
+          }]
         };
 
         Highcharts.chart(options);
+
+
       },
       (error) => {
         console.error('Error fetching data:', error);
       }
     );
   }
+
+
+
+
+  
   getDefaultDate() {
     const today = new Date();
-
     // For <input type="date">
     this.reportDate = today.toISOString().split('T')[0]; // YYYY-MM-DD
-
     // For displaying in DD-MM-YYYY
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0');

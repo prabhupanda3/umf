@@ -19,4 +19,9 @@ export class DashboardService {
 
   return   this.httpClient.post<any>(`${this.baseurl}devicesummary/lastSevenDaysComm`,hload);
   }
+
+  getSignalStrength(hload:{username: string | null, hierarchyId: number, hirarchyLevel: string, date: string, hierarchyName: string | null  }):Observable<Map<String,Number>>{
+
+    return this.httpClient.post<any>(`${this.baseurl}devicesummary/signalStrength`,hload);
+  }
 }
